@@ -14,7 +14,7 @@ dbConnect()
 const UserSummarySchema=new mongoose.Schema({
     userId:String,
     ResumeID:String,
-    summary:String
+    summery:String
 })
 
 const UserSummary=mongoose.model('UserSummary',UserSummarySchema)

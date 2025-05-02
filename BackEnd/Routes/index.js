@@ -61,6 +61,7 @@ router.post('/personalDetails',async(req,res)=>{
         res.json({success:false,message:"personal detailes not stored in the database"})
     }
 })
+
 router.post('/getPersonalDetails',async(req,res)=>{
     const {userId,ResumeID}=req.body;
     const user=await UserPersonalDetails.findOne({UserId:userId})
@@ -71,25 +72,37 @@ router.post('/getPersonalDetails',async(req,res)=>{
         res.json({success:false,message:"personal details not recieved"})
     }
 })
+
 router.post('/addSummary',async(req,res)=>{
     const {userId,ResumeID,Summary}=req.body
     const user=await NewResume.findOne({_id:ResumeID})
     if(user){
         const ressum=await UserSummary.findOne({ResumeID:ResumeID})
         if(ressum){
-            const oldSummary=await UserSummary.findByIdAndUpdate({userId:userId,ResumeID:ResumeID},{
-                summary:Summary
+            const oldSummary=await UserSummary.findOneAndUpdate({userId:userId,ResumeID:ResumeID},{
+                summery:Summary
             })
         }else{
             const newSummary=await UserSummary.create({
                 userId:userId,
                 ResumeID:ResumeID,
-                summary:Summary
+                summery:Summary
             })
         }
         res.json({success:true,message:"summary updated sucessfull"})
     }else{
         res.json({sucess:false,message:"summary not updated"})
+    }
+})
+
+router.post('/getSummary',async(req,res)=>{
+    const {userId,ResumeID}=req.body
+    const user=await UserSummary.findOne({userId:userId})
+    if(user){
+        const summa=await UserSummary.findOne({ResumeID:ResumeID})
+        res.json({success:true,message:"summary fetched successfully",summary:summa})
+    }else{
+        res.json({success:false,message:"Summary not fetched successfully"})
     }
 })
 export default router

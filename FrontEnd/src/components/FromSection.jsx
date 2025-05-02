@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from './ui/button'
 import PersonalDetails from './FormSection/PersonalDetails'
 import Summary from './FormSection/Summary'
+import ProfessionalExperience from './FormSection/ProfessionalExperience'
 function FromSection() {
   const [formIndex,setFormIndex]=useState(1)
   const [enableNext,setEnableNext]=useState(false)
@@ -21,7 +22,10 @@ function FromSection() {
         <PersonalDetails enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==2?<Summary/>:null
+        formIndex==2?<Summary enableNext={(e)=>setEnableNext(e)}/>:null
+      }
+      {
+        formIndex==3?<ProfessionalExperience />:null
       }
       </div>
     </div>
