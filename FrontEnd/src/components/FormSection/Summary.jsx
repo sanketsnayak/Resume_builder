@@ -72,7 +72,7 @@ function Summary({enableNext}) {
             })
         }).then(res=>res.json()).then((data)=>{
           if(data.success){
-            
+          setSummary(data.summary.summery)
            setResumeInfo(prev=>({
               ...prev,
               ...data.summary
@@ -132,7 +132,7 @@ function Summary({enableNext}) {
                 <h2 className='text-sm font-bold'>Add Summary</h2>
                 <Button onClick={generateSummary} variant="outline" className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>Generate from AI</Button>
             </div>
-            <Textarea onChange={(e)=>setSummary(e.target.value)} defaultValue={resumeInfo?.summery} className="mt-5"/>
+            <Textarea onChange={(e)=>setSummary(e.target.value)} defaultValue={summary} className="mt-5"/>
             <div className='flex justify-end mt-3'>
               <Button type='submit'  className="size-fit">{loading?(<div className="col-span-3 flex items-center justify-center">
                   <Oval height={40} width={40} color="white" ariaLabel="loading" />
