@@ -77,6 +77,7 @@ function Summary({enableNext}) {
               ...prev,
               ...data.summary
             }))
+            enableNext(true)
           }
         })
       }catch(err){

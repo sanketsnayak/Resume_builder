@@ -46,7 +46,7 @@ function ProfessionalExperience() {
       ...resumeInfo,
       Experience:experienceList
      })
-   }, [experienceList,resumeInfo,setResumeInfo])
+   }, [experienceList])
    
   return (
     <div>
@@ -81,7 +81,7 @@ function ProfessionalExperience() {
                 <Input onChange={(event)=>handleEvent(event,index)} defaultValue={item.endDate} type="date" name="endDate"></Input>
               </div>
               <div className='col-span-2'>
-                <RichTextEditor  onRichTextEditorChange={(event)=>handleRichText(event,"workSummery",index)}/>
+                <RichTextEditor  onRichTextEditorChange={(event)=>handleRichText(event,"workSummery",index)} index={index}/>
               </div>
             </div>
             <div className='flex justify-end mt-3'>

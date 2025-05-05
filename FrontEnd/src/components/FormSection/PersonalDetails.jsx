@@ -78,6 +78,7 @@ function PersonalDetails({enableNext}) {
                         ...prev,
                         ...data.personalDetails
                       }));
+                      enableNext(true)
                       
                     }
             })
