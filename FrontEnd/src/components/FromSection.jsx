@@ -3,6 +3,7 @@ import { Button } from './ui/button'
 import PersonalDetails from './FormSection/PersonalDetails'
 import Summary from './FormSection/Summary'
 import ProfessionalExperience from './FormSection/ProfessionalExperience'
+import Education from './FormSection/Education'
 function FromSection() {
   const [formIndex,setFormIndex]=useState(1)
   const [enableNext,setEnableNext]=useState(false)
@@ -26,6 +27,9 @@ function FromSection() {
       }
       {
         formIndex==3?<ProfessionalExperience />:null
+      }
+      {
+        formIndex==4?<Education/>:null
       }
       </div>
     </div>
