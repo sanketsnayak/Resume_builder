@@ -83,5 +83,6 @@ export default{
             rating:100,
         }
     ],
-    Experience:[]
+    Experience:[],
+    Education:[]
 }

@@ -6,7 +6,7 @@ function Education({resumeInfo}) {
         <h2 className='text-center font-bold text-sm mt-4 mb-1' style={{color:resumeInfo?.themeColor}}>Education</h2>
         <hr className='border-[1px] mb-3' style={{borderColor:resumeInfo?.themeColor}}/>
         {
-            resumeInfo?.education.map((education,index)=>(
+            resumeInfo?.Education.map((education,index)=>(
                 <div className='mb-3' key={index}>
                     <h2 className='font-medium text-sm' style={{color:resumeInfo?.themeColor}}>{education?.universityName}</h2>
             

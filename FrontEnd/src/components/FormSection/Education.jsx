@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Input } from '../ui/input'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
+import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 function Education() {
     const [educationList,setEducationList]=useState([
         {
@@ -14,6 +15,7 @@ function Education() {
             description:''
         }
     ])
+    const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
 
     const AddEducation=()=>{
         setEducationList([
@@ -32,6 +34,21 @@ function Education() {
     const RemoveEducation=()=>{
         setEducationList((prev)=>prev.slice(0,-1))
     }
+
+    const handleEvent=(index,event)=>{
+        const {name,value}=event.target
+        const newEntries=educationList.slice()
+        newEntries[index][name]=value
+        console.log(newEntries)
+        setEducationList(newEntries)
+    }
+    useEffect(() => {
+      setResumeInfo({
+        ...resumeInfo,
+        Education:educationList
+      })
+    }, [educationList])
+    
   return (
     <div>
         <h2 className='font-bold'>Education</h2>
@@ -42,27 +59,27 @@ function Education() {
                     <div className='grid grid-cols-2 gap-x-6 gap-y-3'>
                         <div>
                             <label className='text-sm font-medium'>University Name</label>
-                            <Input name="universityName"></Input>
+                            <Input name="universityName" onChange={(event)=>handleEvent(index,event)}></Input>
                         </div>
                         <div>
                             <label className='text-sm font-medium'>Degree</label>
-                            <Input name="degree"></Input>
+                            <Input name="degree" onChange={(event)=>handleEvent(index,event)}></Input>
                         </div>
                         <div>
                             <label className='text-sm font-medium'>Major</label>
-                            <Input name="major"></Input>
+                            <Input name="major" onChange={(event)=>handleEvent(index,event)}></Input>
                         </div>
                         <div>
                             <label className='text-sm font-medium'>Start Date</label>
-                            <Input type="date" name="startDate"></Input>
+                            <Input type="date" name="startDate" onChange={(event)=>handleEvent(index,event)}></Input>
                         </div>
                         <div>
                             <label className='text-sm font-medium'>End Date</label>
-                            <Input type="date" name="endDate"></Input>
+                            <Input type="date" name="endDate" onChange={(event)=>handleEvent(index,event)}></Input>
                         </div>
                         <div className='col-span-2'>
                             <label className='text-sm font-medium'>Description</label>
-                            <Textarea name="description"></Textarea>
+                            <Textarea name="description" onChange={(event)=>handleEvent(index,event)}></Textarea>
                         </div>
                     </div>
                     <div className='flex justify-end mt-3'>
