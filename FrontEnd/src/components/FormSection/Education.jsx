@@ -94,7 +94,7 @@ function Education() {
                 <Button onClick={RemoveEducation} variant="outline">- Remove</Button>
                 </div>
                 
-              </div>
+        </div>
     </div>
   )
 }

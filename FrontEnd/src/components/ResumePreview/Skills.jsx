@@ -11,7 +11,7 @@ function Skills({resumeInfo}) {
                 <div className='flex items-center justify-between' key={index}>
                     <h2 className='text-xs font-normal'>{skills?.name}</h2>
                     <div className='bg-gray-200 h-2 w-[35%]'>
-                        <div className='h-full' style={{width:skills?.rating+"%",backgroundColor:resumeInfo?.themeColor}}></div>
+                        <div className='h-full' style={{width:skills?.rating*20+"%",backgroundColor:resumeInfo?.themeColor}}></div>
                     </div>
                 </div>
             ))

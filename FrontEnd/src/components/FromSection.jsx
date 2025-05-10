@@ -4,6 +4,7 @@ import PersonalDetails from './FormSection/PersonalDetails'
 import Summary from './FormSection/Summary'
 import ProfessionalExperience from './FormSection/ProfessionalExperience'
 import Education from './FormSection/Education'
+import Skills from './FormSection/Skills'
 function FromSection() {
   const [formIndex,setFormIndex]=useState(1)
   const [enableNext,setEnableNext]=useState(false)
@@ -31,6 +32,10 @@ function FromSection() {
       {
         formIndex==4?<Education/>:null
       }
+      {
+        formIndex==5?<Skills/>:null
+      }
+
       </div>
     </div>
   )
