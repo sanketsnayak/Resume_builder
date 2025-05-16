@@ -4,6 +4,7 @@ import NewResume from "../models/NewResume.js"
 import UserPersonalDetails from "../models/UserPersonalDetails.js"
 import UserSummary from "../models/UserSummary.js"
 import UserSkillsDetails from "../models/UserSkillsDetails.js"
+import UserEducationDetails from "../models/UserEducationDetails.js"
 const router=express.Router()
 
 router.post('/CreateResume',async(req,res)=>{
@@ -138,6 +139,29 @@ router.post('/getSkills',async(req,res)=>{
     }
     else{
         res.json({success:false,message:"SKills not fetched sucessfully"})
+    }
+})
+
+router.post('/addEducation',async(req,res)=>{
+    const {userId,ResumeID,Education}=req.body
+    const user=await NewResume.findOne({_id:ResumeID})
+    if(user){
+        const ressum=await UserEducationDetails.findOne({ResumeID:ResumeID})
+        if(ressum){
+            const oldEducation=await UserEducationDetails.findOneAndUpdate({userId:userId,ResumeID:ResumeID},{
+                Education:Education
+            })
+        }
+        else{
+            const newEducation=await UserEducationDetails.create({
+                userId:userId,
+                ResumeID:ResumeID,
+                Education:Education
+            })
+        }
+        res.json({success:true,message:"education added successfully"})
+    }else{
+        res.json({success:false,message:"education not added to the database"})
     }
 })
 export default router

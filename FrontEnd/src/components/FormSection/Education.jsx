@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react'
 import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
+import { useUser } from '@clerk/clerk-react'
+import { useParams } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
+import { toast } from "sonner"
 function Education() {
     const [educationList,setEducationList]=useState([
         {
@@ -15,6 +19,9 @@ function Education() {
             description:''
         }
     ])
+    const {user}=useUser()
+    const {id}=useParams()
+    const [loading,setLoading]=useState(false)
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
 
     const AddEducation=()=>{
@@ -42,12 +49,41 @@ function Education() {
         console.log(newEntries)
         setEducationList(newEntries)
     }
+
+    const onsave=async()=>{
+        setLoading(true)
+        try{
+           await fetch('http://localhost:8000/api/addEducation',{
+                mode:"cors",
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body:JSON.stringify({
+                    userId:user.id,
+                    ResumeID:id,
+                    Education:educationList
+                })
+           }).then(res=>res.json()).then(data=>{
+             if(data.success){
+                console.log(data.message)
+             }
+           })
+        }catch(err){
+            console.log(err)
+        }finally{
+            setLoading(false)
+            toast("Education updated Successfully")
+        }
+    }
+
     useEffect(() => {
       setResumeInfo({
         ...resumeInfo,
         Education:educationList
       })
     }, [educationList])
+
     
   return (
     <div>
@@ -82,9 +118,7 @@ function Education() {
                             <Textarea name="description" onChange={(event)=>handleEvent(index,event)}></Textarea>
                         </div>
                     </div>
-                    <div className='flex justify-end mt-3'>
-                        <Button>Save</Button>
-                    </div>
+                    
                 </div>
             ))
         }
@@ -93,7 +127,11 @@ function Education() {
                 <Button onClick={AddEducation} variant="outline">+ Add Education</Button>
                 <Button onClick={RemoveEducation} variant="outline">- Remove</Button>
                 </div>
-                
+                <div>
+                    <Button onClick={onsave}>{loading?(<div className="col-span-3 flex items-center justify-center">
+                                                            <Oval height={40} width={40} color="white" ariaLabel="loading" />
+                                                          </div>):"Save"}</Button>
+                </div>
         </div>
     </div>
   )

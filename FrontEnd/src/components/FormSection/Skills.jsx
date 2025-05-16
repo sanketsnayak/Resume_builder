@@ -8,6 +8,7 @@ import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 import { useUser } from '@clerk/clerk-react';
 import { useParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner'
+import { toast } from "sonner"
 function Skills() {
   const [skillsList,setSkillsList]=useState([
     {
@@ -70,6 +71,7 @@ function Skills() {
         console.log(err)
       }finally{
         setLoading(false)
+        toast("Skills Updated Successfully")
       }
   }
 
