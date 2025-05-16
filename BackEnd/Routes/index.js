@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import NewResume from "../models/NewResume.js"
 import UserPersonalDetails from "../models/UserPersonalDetails.js"
 import UserSummary from "../models/UserSummary.js"
+import UserSkillsDetails from "../models/UserSkillsDetails.js"
 const router=express.Router()
 
 router.post('/CreateResume',async(req,res)=>{
@@ -103,6 +104,40 @@ router.post('/getSummary',async(req,res)=>{
         res.json({success:true,message:"summary fetched successfully",summary:summa})
     }else{
         res.json({success:false,message:"Summary not fetched successfully"})
+    }
+})
+
+router.post('/addSkills',async(req,res)=>{
+    const {userId,ResumeID,Skills}=req.body
+    const user= await NewResume.findOne({_id:ResumeID})
+    if(user){
+        const ressum= await UserSkillsDetails.findOne({ResumeID:ResumeID})
+        if(ressum){
+            const oldSkills=await UserSkillsDetails.findOneAndUpdate({userId:userId,ResumeID:ResumeID},{
+                skills:Skills
+            })
+        }else{
+            const newSkills=await UserSkillsDetails.create({
+                userId:userId,
+                ResumeID:ResumeID,
+                skills:Skills
+            })
+        }
+        res.json({success:true,message:"Skills added successfully"})
+    }else{
+        res.json({success:false,message:"Skills not added successfully"})
+    }
+})
+
+router.post('/getSkills',async(req,res)=>{
+    const {userId,ResumeID}=req.body
+    const user=await UserSkillsDetails.findOne({userId:userId})
+    if(user){
+        const skillsList=await UserSkillsDetails.findOne({ResumeID:ResumeID})
+        res.json({success:true,message:"skills fetched successfully",Skills:skillsList})
+    }
+    else{
+        res.json({success:false,message:"SKills not fetched sucessfully"})
     }
 })
 export default router
