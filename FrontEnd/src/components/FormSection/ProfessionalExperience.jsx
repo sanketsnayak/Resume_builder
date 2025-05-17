@@ -3,6 +3,10 @@ import { Input } from '../ui/input'
 import RichTextEditor from '../RichTextEditor'
 import { Button } from '../ui/button'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
+import { useUser } from '@clerk/clerk-react'
+import { useParams } from 'react-router-dom'
+import { Oval } from 'react-loader-spinner'
+import { toast } from "sonner"
 function ProfessionalExperience() {
   const formfield={
             
@@ -14,11 +18,13 @@ function ProfessionalExperience() {
             endDate:'',
             workSummery:''
   }
-   const [experienceList,setExperienceList]=useState([
+  const {user}=useUser()
+  const {id}=useParams()
+  const [experienceList,setExperienceList]=useState([
     formfield
    ])
    const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
-
+   const [loading,setLoading]=useState(false)
    const addNewExperience=()=>{
     setExperienceList((prev)=>[...prev,formfield])
    }
@@ -41,12 +47,67 @@ function ProfessionalExperience() {
     newEntries[index][name]=event.target.value
     setExperienceList(newEntries)
    }
+
+   const onsave=async()=>{
+    setLoading(true)
+      try{
+        await fetch('http://localhost:8000/api/addExperience',{
+          mode:"cors",
+          method:"POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body:JSON.stringify({
+              userId:user.id,
+              ResumeID:id,
+              Experience:experienceList
+          })
+        }).then(res=>res.json()).then(data=>{
+          if(data.success){
+            console.log(data.message)
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }finally{
+        setLoading(false)
+        toast("Experience Updated successfully")
+      }
+   }
+
+   const getExperience=async()=>{
+      await fetch('http://localhost:8000/api/getExperience',{
+        mode:"cors",
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:user.id,
+          ResumeID:id
+        })
+      }).then(res=>res.json()).then(data=>{
+        if(data.success){
+          setResumeInfo({
+            ...resumeInfo,
+            Experience:data.experience.Experience
+          })
+          setExperienceList(data.experience.Experience)
+        }
+      })
+   }
+
    useEffect(() => {
      setResumeInfo({
       ...resumeInfo,
       Experience:experienceList
      })
    }, [experienceList])
+
+   useEffect(() => {
+     getExperience()
+   }, [])
+   
    
   return (
     <div>
@@ -81,12 +142,10 @@ function ProfessionalExperience() {
                 <Input onChange={(event)=>handleEvent(event,index)} defaultValue={item.endDate} type="date" name="endDate"></Input>
               </div>
               <div className='col-span-2'>
-                <RichTextEditor  onRichTextEditorChange={(event)=>handleRichText(event,"workSummery",index)} index={index}/>
+                <RichTextEditor Value={item.workSummery} onRichTextEditorChange={(event)=>handleRichText(event,"workSummery",index)} index={index}/>
               </div>
             </div>
-            <div className='flex justify-end mt-3'>
-            <Button>Save</Button>
-            </div>
+            
           </div>
         ))
       }
@@ -95,7 +154,11 @@ function ProfessionalExperience() {
         <Button onClick={addNewExperience} variant="outline">+ Add Experience</Button>
         <Button onClick={removeExperience} variant="outline">- Remove</Button>
         </div>
-        
+        <div>
+          <Button onClick={onsave}>{loading?(<div className="col-span-3 flex items-center justify-center">
+                          <Oval height={40} width={40} color="white" ariaLabel="loading" />
+                      </div>):"Save"}</Button>
+        </div>
       </div>
     </div>
   )

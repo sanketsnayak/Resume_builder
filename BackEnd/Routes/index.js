@@ -201,4 +201,16 @@ router.post('/addExperience',async(req,res)=>{
         res.json({success:false,message:"Failed to add experience"})
     }
 })
+
+router.post('/getExperience',async(req,res)=>{
+    const {userId,ResumeID}=req.body
+    const user=await UserExperience.findOne({userId:userId})
+    if(user){
+        const experienceList=await UserExperience.findOne({ResumeID:ResumeID})
+        res.json({success:true,message:"User experience fetched successfully",experience:experienceList})
+    }
+    else{
+        res.json({success:false,message:"User Experience is not fetched successfully"})
+    }
+})
 export default router
