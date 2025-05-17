@@ -5,6 +5,7 @@ import UserPersonalDetails from "../models/UserPersonalDetails.js"
 import UserSummary from "../models/UserSummary.js"
 import UserSkillsDetails from "../models/UserSkillsDetails.js"
 import UserEducationDetails from "../models/UserEducationDetails.js"
+import UserExperience from "../models/UserExperience.js"
 const router=express.Router()
 
 router.post('/CreateResume',async(req,res)=>{
@@ -162,6 +163,42 @@ router.post('/addEducation',async(req,res)=>{
         res.json({success:true,message:"education added successfully"})
     }else{
         res.json({success:false,message:"education not added to the database"})
+    }
+})
+
+router.post('/getEducation',async(req,res)=>{
+    const {userId,ResumeID}=req.body
+    const user=await UserEducationDetails.findOne({userId:userId})
+    if(user){
+        const EducationList=await UserEducationDetails.findOne({ResumeID:ResumeID})
+        res.json({success:true,message:"the user education details fetched successfully",education:EducationList})
+    }
+    else{
+        res.json({success:false,message:"the user education details not fetched successfully"})
+    }
+})
+
+router.post('/addExperience',async(req,res)=>{
+    const {userId,ResumeID,Experience}=req.body
+    const user=await NewResume.findOne({_id:ResumeID})
+    if(user){
+        const ressum=await UserExperience.findOne({ResumeID:ResumeID})
+        if(ressum){
+            const oldExperience=await UserExperience.findOneAndUpdate({userId:userId,ResumeID:ResumeID},{
+                Experience:Experience
+            })
+        }
+        else{
+            const newExperience=await UserExperience.create({
+                userId:userId,
+                ResumeID:ResumeID,
+                Experience:Experience
+            })
+        }
+        res.json({success:true,message:"Added Experience Successfully"})
+    }
+    else{
+        res.json({success:false,message:"Failed to add experience"})
     }
 })
 export default router

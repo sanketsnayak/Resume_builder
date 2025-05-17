@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const EducationListSchema=new mongoose.Schema({
             universityName:String,
-            startDate:Date,
-            endDate:Date,
+            startDate:String,
+            endDate:String,
             degree:String,
             major:String,
             description:String
@@ -12,7 +12,7 @@ const EducationListSchema=new mongoose.Schema({
 
 const UserEducationDetailsSchema=new mongoose.Schema({
     userId:String,
-    ResumeId:String,
+    ResumeID:String,
     Education:[EducationListSchema]
 })
 
