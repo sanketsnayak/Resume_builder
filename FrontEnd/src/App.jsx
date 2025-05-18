@@ -5,6 +5,7 @@ import Layout from "./Layout"
 import Signin from "./pages/Signin"
 import Resume from "./pages/Resume"
 import { useUser } from "@clerk/clerk-react"
+
 function App() {
 
   const {user,isSignedIn,isLoaded}=useUser()
@@ -22,6 +23,7 @@ function App() {
           <Route path="" element={<LandinPage/>}/>
           <Route path="dashboard" element={isSignedIn?<Dashboard/>:<Navigate to="/signin"/>} />
           <Route path="dashboard/resume/:id" element={<Resume/>}/>
+          
         </Route>
         <Route path="/signin" element={<Signin/>}/>
       </Routes>

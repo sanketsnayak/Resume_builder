@@ -13,7 +13,15 @@ function PersonalDetails({enableNext}) {
     const {user}=useUser()
     const {id}=useParams()
     const [loading,setLoading]=useState(false)
-    
+    const [personal,setPersonal]=useState({
+        firstName: "",
+        lastName: "",
+        jobTitle: "",
+        address: "",
+        phone: "",
+        email: "",
+        themeColor: ""
+    })
     
     const onsave=async(e)=>{
         e.preventDefault();
@@ -58,6 +66,10 @@ function PersonalDetails({enableNext}) {
             ...resumeInfo,
             [name]:value
         })
+        setPersonal({
+            ...personal,
+            [name]:value
+        })
         enableNext(false)}
     
     const getPersonalDetails=async()=>{
@@ -78,6 +90,7 @@ function PersonalDetails({enableNext}) {
                         ...prev,
                         ...data.personalDetails
                       }));
+                      setPersonal(data.personalDetails)
                       enableNext(true)
                       
                     }
@@ -86,9 +99,45 @@ function PersonalDetails({enableNext}) {
             console.log(err)
         }
     }
+
+    const getSummary=async()=>{
+      try{
+        await fetch('http://localhost:8000/api/getSummary',{
+            mode:"cors",
+            method:"POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+              userId:user.id,
+              ResumeID:id,
+            })
+        }).then(res=>res.json()).then((data)=>{
+          if(data.success){
+          
+           setResumeInfo(prev=>({
+              ...prev,
+              ...data.summary
+            }))
+            enableNext(true)
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    
+
+   
+
     useEffect(() => {
       getPersonalDetails()
+      getSummary()
+      
     }, [])
+
+    
     
   return (
     <div>
@@ -98,27 +147,27 @@ function PersonalDetails({enableNext}) {
         <div className='grid grid-cols-2 my-3 gap-3'>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>First Name</label>
-                <Input name='firstName'  onChange={handleEvent}  required></Input>
+                <Input name='firstName' value={personal.firstName }   onChange={handleEvent}  required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Last Name</label>
-                <Input name='lastName'  onChange={handleEvent} required></Input>
+                <Input name='lastName' value={personal.lastName}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1 col-span-2'>
                 <label className='text-xs'>Job Title</label>
-                <Input name='jobTitle'  onChange={handleEvent} required></Input>
+                <Input name='jobTitle' value={personal.jobTitle}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1 col-span-2'>
                 <label className='text-xs'>Address</label>
-                <Input name='address'  onChange={handleEvent} required></Input>
+                <Input name='address' value={personal.address} onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Phone</label>
-                <Input name='phone'   onChange={handleEvent} required></Input>
+                <Input name='phone' value={personal.phone}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Email</label>
-                <Input name='email'  onChange={handleEvent} required></Input>
+                <Input name='email' value={personal.email} onChange={handleEvent} required></Input>
             </div>
             <div className='flex justify-end col-span-2'>
                 <Button type='submit'  className="size-fit">{loading?(<div className="col-span-3 flex items-center justify-center">

@@ -83,6 +83,33 @@ export default{
             rating:5,
         }
     ],
-    Experience:[],
-    Education:[]
+    Experience:[
+        {
+            id:1,
+            title:'Full Stack Developer',
+            companyName:'Amazon',
+            city:'New York',
+            state:'NY',
+            startDate:'Jan 2021',
+            endDate:'',
+            currentlyWorking:true,
+            workSummery:' Designed, developed, and maintained full-stack applications using React and Node.js.\n'+
+            '• Implemented responsive user interfaces with React, ensuring seamless user experiences across\n'+
+            'various devices and browsers.\n'+
+            '• Maintaining the React Native in-house organization application.'+
+            '• CreatedRESTfulAPIs withNode.js and Express,facilitating data communicationbetween the front-end'+
+            'and back-end systems.'
+        },
+    ],
+    Education:[
+        {
+            id:1,
+            universityName:'Western Illinois University',
+            startDate:'Aug 2018',
+            endDate:'Dec:2019',
+            degree:'Master',
+            major:'Computer Science',
+            description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
+        },
+    ]
 }
