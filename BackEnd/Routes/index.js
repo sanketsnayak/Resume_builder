@@ -213,4 +213,41 @@ router.post('/getExperience',async(req,res)=>{
         res.json({success:false,message:"User Experience is not fetched successfully"})
     }
 })
+
+router.post('/deleteResume',async(req,res)=>{
+    const {userId,ResumeID,title}=req.body
+    const Resume=await NewResume.findOne({title:title,createdBy:userId,_id:ResumeID})
+    if(Resume){
+        const delRes=await NewResume.findOneAndDelete({title:title,createdBy:userId})
+        const edu=await UserEducationDetails.findOne({userId:userId,ResumeID:ResumeID})
+    if(edu){
+        const delEdu=await UserEducationDetails.findByIdAndDelete({userId:userId,ResumeID})
+    }
+    const exp=await UserExperience.findOne({userId:userId,ResumeID:ResumeID})
+    if(exp){
+        const delExp=await UserExperience.findByIdAndDelete({userId:userId,ResumeID:ResumeID})
+    }
+    const per=await UserPersonalDetails.findOne({UserId:userId,ResumeID:ResumeID})
+    if(per){
+        const delPer=await UserPersonalDetails.findByIdAndDelete({UserId:userId,ResumeID:ResumeID})
+    }
+    const skill=await UserSkillsDetails.findOne({userId:userId,ResumeID:ResumeID})
+    if(skill){
+        const delSkil=await UserSkillsDetails.findOneAndDelete({userId:userId,ResumeID:ResumeID})
+    }
+    const summ=await UserSummary.findOne({userId:userId,ResumeID:ResumeID})
+    if(summ){
+        const delSumm=await UserSummary.findByIdAndDelete({userId:userId,ResumeID:ResumeID})
+    }
+    res.json({success:true,message:"Deleted all th records of the resumes"})
+    }
+    else{
+        res.json({success:false,message:"not able to delete the resume"})
+    }
+    
+
+   
+    
+})
+
 export default router
