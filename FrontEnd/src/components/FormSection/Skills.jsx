@@ -9,7 +9,7 @@ import { useUser } from '@clerk/clerk-react';
 import { useParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner'
 import { toast } from "sonner"
-function Skills() {
+function Skills({enableNext}) {
   const [skillsList,setSkillsList]=useState([
     {
       name:'',
@@ -50,6 +50,7 @@ function Skills() {
 
   const onsave=async()=>{
       setLoading(true)
+      enableNext(true)
       try{
         await fetch('http://localhost:8000/api/addSkills',{
           mode:"cors",

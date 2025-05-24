@@ -7,7 +7,7 @@ import { useUser } from '@clerk/clerk-react'
 import { useParams } from 'react-router-dom'
 import { Oval } from 'react-loader-spinner'
 import { toast } from "sonner"
-function ProfessionalExperience() {
+function ProfessionalExperience({enableNext}) {
   const formfield={
             
             title:'',
@@ -50,6 +50,7 @@ function ProfessionalExperience() {
 
    const onsave=async()=>{
     setLoading(true)
+    enableNext(true)
       try{
         await fetch('http://localhost:8000/api/addExperience',{
           mode:"cors",

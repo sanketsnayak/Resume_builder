@@ -6,6 +6,7 @@ import ProfessionalExperience from './FormSection/ProfessionalExperience'
 import Education from './FormSection/Education'
 import Skills from './FormSection/Skills'
 import TextColor from './TextColor'
+import Download from './FormSection/Download'
 function FromSection() {
   const [formIndex,setFormIndex]=useState(1)
   const [enableNext,setEnableNext]=useState(false)
@@ -29,13 +30,16 @@ function FromSection() {
         formIndex==2?<Summary enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==3?<ProfessionalExperience />:null
+        formIndex==3?<ProfessionalExperience enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==4?<Education/>:null
+        formIndex==4?<Education enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==5?<Skills/>:null
+        formIndex==5?<Skills enableNext={(e)=>setEnableNext(e)}/>:null
+      }
+      {
+        formIndex==6?<Download/>:null
       }
       
       </div>
