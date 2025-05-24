@@ -8,13 +8,16 @@ import Skills from './ResumePreview/Skills'
 function ResumePreview() {
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
   return (
-    <div className='shadow-lg border-t-[20px] h-full p-12' style={{borderColor:resumeInfo?.themeColor}}>
+   <div id="resume-preview" className="bg-[--background] text-[--foreground] p-12">
+    <div  className='shadow-lg border-t-[20px] h-full p-12' style={{borderColor:resumeInfo?.themeColor}}>
         <PersonalDetails resumeInfo={resumeInfo}/>
         <Summary resumeInfo={resumeInfo}/>
         <ProfessionalExperience resumeInfo={resumeInfo}/>
         <Education resumeInfo={resumeInfo}/>
         <Skills resumeInfo={resumeInfo}/>
     </div>
+    </div>
+    
   )
 }
 
