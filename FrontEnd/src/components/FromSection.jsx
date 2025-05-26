@@ -39,7 +39,7 @@ function FromSection() {
         formIndex==5?<Skills enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==6?<Download/>:null
+        formIndex==6?<Download  />:null
       }
       
       </div>

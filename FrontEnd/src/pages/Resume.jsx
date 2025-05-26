@@ -7,7 +7,7 @@ import Dummy from '@/data/Dummy'
 import { useState,useEffect } from 'react'
 function Resume() {
   const [resumeInfo,setResumeInfo]=useState()
-
+ 
   useEffect(() => {
     setResumeInfo(Dummy)
   }, [])
@@ -15,8 +15,10 @@ function Resume() {
   return (
     <ResumeInfoContext.Provider value={{resumeInfo,setResumeInfo}}>
     <div className='grid grid-cols-2 p-10 gap-10'>
-        <FromSection/>
+        <FromSection />
+        
         <ResumePreview/>
+        
         <Toaster/>
     </div>
     </ResumeInfoContext.Provider>
