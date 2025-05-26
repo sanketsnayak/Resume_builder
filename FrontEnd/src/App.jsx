@@ -5,11 +5,13 @@ import Layout from "./Layout"
 import Signin from "./pages/Signin"
 import Resume from "./pages/Resume"
 import { useUser } from "@clerk/clerk-react"
-
+import Download from "./components/FormSection/Download"
+import { useState } from "react"
+import { ResumeInfoContext } from "./context/ResumeInfoContext"
 function App() {
 
   const {user,isSignedIn,isLoaded}=useUser()
-
+   const [resumeInfo,setResumeInfo]=useState()
   if(!isLoaded){
     return(
       <div>Loading</div>
@@ -17,6 +19,7 @@ function App() {
   }
  
   return (
+    <ResumeInfoContext.Provider value={{resumeInfo,setResumeInfo}}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout/>}>
@@ -26,8 +29,10 @@ function App() {
           
         </Route>
         <Route path="/signin" element={<Signin/>}/>
+        <Route path="dashboard/resume/:id/download" element={<Download/>}/>
       </Routes>
     </BrowserRouter>
+    </ResumeInfoContext.Provider>
   )
 }
  

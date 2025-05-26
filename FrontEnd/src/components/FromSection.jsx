@@ -7,10 +7,11 @@ import Education from './FormSection/Education'
 import Skills from './FormSection/Skills'
 import TextColor from './TextColor'
 import Download from './FormSection/Download'
+import { Navigate, useParams } from 'react-router-dom'
 function FromSection() {
   const [formIndex,setFormIndex]=useState(1)
   const [enableNext,setEnableNext]=useState(false)
-  
+  const {id}=useParams()
   return (
     <div>
       <div className='flex justify-between'>
@@ -39,7 +40,7 @@ function FromSection() {
         formIndex==5?<Skills enableNext={(e)=>setEnableNext(e)}/>:null
       }
       {
-        formIndex==6?<Download  />:null
+        formIndex==6?<Navigate to={`/dashboard/resume/${id}/download`}/>:null
       }
       
       </div>

@@ -135,3 +135,27 @@
   --muted: #e5e7eb;
   --accent: #10b981;
 }
+
+@media print{
+  .no-print{
+    display: none;
+  }
+
+  #print-area{
+    display:block;
+  }
+  #No-print{
+    display: none;
+  }
+  body{
+    margin: 0;
+    padding: 0;
+    
+  }
+}
+
+@page{
+  margin: 0mm;
+  size: full;
+  width: 100vw;
+}
