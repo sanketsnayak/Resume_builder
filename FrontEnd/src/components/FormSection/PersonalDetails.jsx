@@ -127,6 +127,71 @@ function PersonalDetails({enableNext}) {
       }
     }
 
+     const getEducation=async()=>{
+        await fetch('http://localhost:8000/api/getEducation',{
+            mode:"cors",
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+                userId:user.id,
+                ResumeID:id
+            })
+        }).then(res=>res.json()).then(data=>{
+            if(data.success){
+                setResumeInfo(prev => ({
+                    ...prev,
+                    Education: data.education.Education
+                }))
+                
+            }
+        })
+    }
+
+    const getExperience=async()=>{
+      await fetch('http://localhost:8000/api/getExperience',{
+        mode:"cors",
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:user.id,
+          ResumeID:id
+        })
+      }).then(res=>res.json()).then(data=>{
+        if(data.success){
+          setResumeInfo(prev => ({
+                ...prev,
+                Experience: data.experience.Experience
+          }))
+          
+        }
+      })
+   }
+
+   const getSkills=async()=>{
+    await fetch('http://localhost:8000/api/getSkills',{
+      mode:"cors",
+      method:"POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body:JSON.stringify({
+        userId:user.id,
+        ResumeID:id
+      })
+    }).then(res=>res.json()).then(data=>{
+      if(data.success){
+        setResumeInfo(prev => ({
+            ...prev,
+            skills:data.Skills.skills
+        }))
+        
+      }
+    })
+  }
     
 
    
@@ -134,6 +199,9 @@ function PersonalDetails({enableNext}) {
     useEffect(() => {
       getPersonalDetails()
       getSummary()
+      getEducation()
+      getExperience()
+      getSkills()
       
     }, [])
 

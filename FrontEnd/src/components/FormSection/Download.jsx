@@ -1,13 +1,147 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button } from '../ui/button'
 import ResumePreview from '../ResumePreview'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import Navbar from '../Navbar'
+import { useUser } from '@clerk/clerk-react'
+import { useParams } from 'react-router-dom'
 function Download() {
   const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
+  const {user}=useUser()
+  const {id}=useParams()
   const handleDownload=()=>{
     window.print()
   }
+
+  const getSummary=async()=>{
+      try{
+        await fetch('http://localhost:8000/api/getSummary',{
+            mode:"cors",
+            method:"POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+              userId:user.id,
+              ResumeID:id,
+            })
+        }).then(res=>res.json()).then((data)=>{
+          if(data.success){
+          
+           setResumeInfo(prev=>({
+              ...prev,
+              ...data.summary
+            }))
+            
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    const getPersonalDetails=async()=>{
+        try{
+            await fetch('http://localhost:8000/api/getPersonalDetails',{
+                mode:'cors',
+                method:'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                body:JSON.stringify({
+                    userId:user.id,
+                    ResumeID:id
+                })
+            }).then(res=>res.json()).then((data)=>{
+                if(data.success){
+                    setResumeInfo(prev => ({
+                        ...prev,
+                        ...data.personalDetails
+                      }));
+                      
+                      
+                    }
+            })
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+     const getEducation=async()=>{
+        await fetch('http://localhost:8000/api/getEducation',{
+            mode:"cors",
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+                userId:user.id,
+                ResumeID:id
+            })
+        }).then(res=>res.json()).then(data=>{
+            if(data.success){
+                setResumeInfo(prev => ({
+                    ...prev,
+                    Education: data.education.Education
+                }))
+                
+            }
+        })
+    }
+
+    const getExperience=async()=>{
+      await fetch('http://localhost:8000/api/getExperience',{
+        mode:"cors",
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:user.id,
+          ResumeID:id
+        })
+      }).then(res=>res.json()).then(data=>{
+        if(data.success){
+          setResumeInfo(prev => ({
+                ...prev,
+                Experience: data.experience.Experience
+          }))
+          
+        }
+      })
+   }
+
+   const getSkills=async()=>{
+    await fetch('http://localhost:8000/api/getSkills',{
+      mode:"cors",
+      method:"POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body:JSON.stringify({
+        userId:user.id,
+        ResumeID:id
+      })
+    }).then(res=>res.json()).then(data=>{
+      if(data.success){
+        setResumeInfo(prev => ({
+            ...prev,
+            skills:data.Skills.skills
+        }))
+        
+      }
+    })
+  }
+
+    useEffect(() => {
+      getSummary()
+      getPersonalDetails()
+      getEducation()
+      getExperience()
+      getSkills()
+    }, [])
+    
+    
   return (
     <>
     <div class="no-print">

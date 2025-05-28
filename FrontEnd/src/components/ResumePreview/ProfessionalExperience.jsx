@@ -1,6 +1,9 @@
 import React from 'react'
 
 function ProfessionalExperience({resumeInfo}) {
+   if (!resumeInfo?.Experience || !Array.isArray(resumeInfo.Experience)) {
+    return null 
+  }
   return (
     <div className='my-4'>
         <h2 className='text-center font-bold text-sm mt-4 mb-1' style={{color:resumeInfo?.themeColor}}>Professional Experience</h2>

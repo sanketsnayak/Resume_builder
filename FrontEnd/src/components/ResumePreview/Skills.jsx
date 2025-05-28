@@ -1,6 +1,9 @@
 import React from 'react'
 
 function Skills({resumeInfo}) {
+     if (!resumeInfo?.skills || !Array.isArray(resumeInfo.skills)) {
+    return null 
+  }
   return (
     <div className='my-4'>
         <h2 className='text-center font-bold text-sm mt-4 mb-1' style={{color:resumeInfo?.themeColor}}>Skills</h2>
