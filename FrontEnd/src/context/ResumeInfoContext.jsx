@@ -1,3 +1,6 @@
 import { createContext } from "react";
-
-export const ResumeInfoContext=createContext(null)
+import Dummy from "@/data/Dummy";
+export const ResumeInfoContext=createContext(
+    {resumeInfo: Dummy,
+  setResumeInfo: () => {},}
+)

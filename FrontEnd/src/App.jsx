@@ -8,10 +8,12 @@ import { useUser } from "@clerk/clerk-react"
 import Download from "./components/FormSection/Download"
 import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
+import Dummy from "./data/Dummy"
 function App() {
 
   const {user,isSignedIn,isLoaded}=useUser()
-   const [resumeInfo,setResumeInfo]=useState()
+  
+   const [resumeInfo,setResumeInfo]=useState(Dummy)
   if(!isLoaded){
     return(
       <div>Loading</div>

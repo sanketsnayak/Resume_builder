@@ -87,10 +87,28 @@ function PersonalDetails({enableNext}) {
             }).then(res=>res.json()).then((data)=>{
                 if(data.success){
                     setResumeInfo(prev => ({
-                        ...prev,
-                        ...data.personalDetails
-                      }));
-                      setPersonal(data.personalDetails)
+      ...prev,
+      firstName: data.personalDetails?.firstName ?? prev.firstName ?? "",
+      lastName: data.personalDetails?.lastName ?? prev.lastName ?? "",
+      jobTitle: data.personalDetails?.jobTitle ?? prev.jobTitle ?? "",
+      address: data.personalDetails?.address ?? prev.address ?? "",
+      phone: data.personalDetails?.phone ?? prev.phone ?? "",
+      email: data.personalDetails?.email ?? prev.email ?? "",
+      Education: prev.Education || [],
+      Experience: prev.Experience || [],
+      skills: prev.skills || [],
+      summary: prev.summary || "",
+      themeColor: data.personalDetails?.themeColor || prev.themeColor || "#FF5733"
+    }));
+    setPersonal({
+      firstName: data.personalDetails?.firstName ?? "",
+      lastName: data.personalDetails?.lastName ?? "",
+      jobTitle: data.personalDetails?.jobTitle ?? "",
+      address: data.personalDetails?.address ?? "",
+      phone: data.personalDetails?.phone ?? "",
+      email: data.personalDetails?.email ?? "",
+      themeColor: data.personalDetails?.themeColor ?? "#FF5733"
+    });
                       enableNext(true)
                       
                     }
@@ -117,7 +135,7 @@ function PersonalDetails({enableNext}) {
           
            setResumeInfo(prev=>({
               ...prev,
-              ...data.summary
+              ...data.summary || prev.summary
             }))
             enableNext(true)
           }
@@ -141,9 +159,9 @@ function PersonalDetails({enableNext}) {
         }).then(res=>res.json()).then(data=>{
             if(data.success){
                 setResumeInfo(prev => ({
-                    ...prev,
-                    Education: data.education.Education
-                }))
+    ...prev,
+    Education: data.education?.Education || prev.Education || []
+}))
                 
             }
         })
@@ -163,9 +181,9 @@ function PersonalDetails({enableNext}) {
       }).then(res=>res.json()).then(data=>{
         if(data.success){
           setResumeInfo(prev => ({
-                ...prev,
-                Experience: data.experience.Experience
-          }))
+    ...prev,
+    Experience: data.experience?.Experience || prev.Experience || []
+}))
           
         }
       })
@@ -185,9 +203,9 @@ function PersonalDetails({enableNext}) {
     }).then(res=>res.json()).then(data=>{
       if(data.success){
         setResumeInfo(prev => ({
-            ...prev,
-            skills:data.Skills.skills
-        }))
+    ...prev,
+    skills: (data.Skills && data.Skills.skills) ? data.Skills.skills : (prev.skills || [])
+}))
         
       }
     })

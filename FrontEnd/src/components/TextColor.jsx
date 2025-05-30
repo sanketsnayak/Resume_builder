@@ -19,12 +19,12 @@ function TextColor() {
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
     const {user}=useUser()
     const {id}=useParams()
-    const [colo,setColo]=useState()
+    const [colo,setColo]=useState("#FF5733")
     const setColor=(item)=>{
-        setResumeInfo({
-            ...resumeInfo,
-            themeColor:item
-        })
+        setResumeInfo(prev => ({
+  ...prev,
+  themeColor: item || prev.themeColor || "#FF5733"
+}));
     }
 
     const handleColor=async(item)=>{
@@ -58,19 +58,22 @@ function TextColor() {
                 ResumeID:id
             })
         }).then(res=>res.json()).then(data=>{
-            if(data.success){
-                setColo(data.personalDetails.themeColor)
-            }
+            if (data.success && data.personalDetails && data.personalDetails.themeColor) {
+        setColo(data.personalDetails.themeColor);
+    } else {
+        setColo("#FF5733"); // fallback color
+    }
         })
     }
 
     useEffect(() => {
-      getThemeColor()
-      setResumeInfo({
-        ...resumeInfo,
-        themeColor:colo
-      })
-    }, [colo])
+        getThemeColor()
+  if (!resumeInfo) return; 
+  setResumeInfo(prev => ({
+    ...prev,
+    themeColor: colo || prev?.themeColor || "#FF5733"
+  }))
+}, [colo])
     
 
   return (
