@@ -11,7 +11,7 @@ function Dashboard() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarTrigger />
+      
     <div>
       
       <AddResume/>

@@ -24,9 +24,10 @@ function App() {
     <ResumeInfoContext.Provider value={{resumeInfo,setResumeInfo}}>
     <BrowserRouter>
       <Routes>
+        <Route path="/dashboard" element={isSignedIn?<Dashboard/>:<Navigate to="/signin"/>} />
         <Route path="/" element={<Layout/>}>
           <Route path="" element={<LandinPage/>}/>
-          <Route path="dashboard" element={isSignedIn?<Dashboard/>:<Navigate to="/signin"/>} />
+          
           <Route path="dashboard/resume/:id" element={<Resume/>}/>
           
         </Route>

@@ -218,18 +218,18 @@ router.post('/deleteResume',async(req,res)=>{
     const {userId,ResumeID}=req.body
     const Resume=await NewResume.findOne({createdBy:userId,_id:ResumeID})
     if(Resume){
-        const delRes=await NewResume.findOneAndDelete({_id:ResumeID,createdBy:userId})
+        
         const edu=await UserEducationDetails.findOne({userId:userId,ResumeID:ResumeID})
         if(edu){
-        const delEdu=await UserEducationDetails.findByIdAndDelete({userId:userId,ResumeID})
+        const delEdu=await UserEducationDetails.findOneAndDelete({userId:userId,ResumeID})
         }
         const exp=await UserExperience.findOne({userId:userId,ResumeID:ResumeID})
         if(exp){
-        const delExp=await UserExperience.findByIdAndDelete({userId:userId,ResumeID:ResumeID})
+        const delExp=await UserExperience.findOneAndDelete({userId:userId,ResumeID:ResumeID})
         }
         const per=await UserPersonalDetails.findOne({UserId:userId,ResumeID:ResumeID})
         if(per){
-        const delPer=await UserPersonalDetails.findByIdAndDelete({UserId:userId,ResumeID:ResumeID})
+        const delPer=await UserPersonalDetails.findOneAndDelete({UserId:userId,ResumeID:ResumeID})
         }
         const skill=await UserSkillsDetails.findOne({userId:userId,ResumeID:ResumeID})
         if(skill){
@@ -237,8 +237,9 @@ router.post('/deleteResume',async(req,res)=>{
         }
         const summ=await UserSummary.findOne({userId:userId,ResumeID:ResumeID})
         if(summ){
-        const delSumm=await UserSummary.findByIdAndDelete({userId:userId,ResumeID:ResumeID})
+        const delSumm=await UserSummary.findOneAndDelete({userId:userId,ResumeID:ResumeID})
         }
+        const delRes=await NewResume.findOneAndDelete({_id:ResumeID,createdBy:userId})
     res.json({success:true,message:"Deleted all th records of the resumes"})
     }
     else{
