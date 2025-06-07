@@ -72,7 +72,7 @@ function AddResume() {
   
   return (
     <>
-    <div className='grid gap-3 grid-cols-4 px-10 py-10'>
+    <div className='grid gap-3 grid-cols-4 '>
         <div onClick={()=>setOpenDialog(true)} className='h-[30vh] w-[15vw] bg-secondary flex justify-center items-center border-2 rounded border-dotted hover:scale-105 transition-all hover:shadow-md'>
             +
         </div>
