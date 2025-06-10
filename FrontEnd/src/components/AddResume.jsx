@@ -13,15 +13,20 @@ import {
   import { useNavigate } from "react-router-dom"
   import ListCard from "./ListCard.jsx"
   import { Oval } from "react-loader-spinner"
-  
+  import { Plus } from "lucide-react"
 
-function AddResume() {
+function AddResume({search}) {
   const [openDialog,setOpenDialog]=useState(false)
   const [title,setTitle]=useState("")
   const {user}=useUser()
   const [resumeList,setResumeList]=useState([])
   const [loading,setloading]=useState(false)
   const navigate=useNavigate()
+
+    const filteredData1 = resumeList.filter(item =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
+
 
   const handleCreate=async()=>{
     try{
@@ -73,12 +78,38 @@ function AddResume() {
   return (
     <>
     <div className='grid gap-3 grid-cols-4 '>
-        <div onClick={()=>setOpenDialog(true)} className='h-[30vh] w-[15vw] bg-secondary flex justify-center items-center border-2 rounded border-dotted hover:scale-105 transition-all hover:shadow-md'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
-        </div>
+        <div 
+      className='cursor-pointer group'
+      onClick={()=>setOpenDialog(true)}
+    >
+      <div className='bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-dashed border-orange-300 rounded-lg hover:border-orange-400 hover:from-orange-100 hover:to-orange-200 transition-all duration-200 overflow-hidden h-64 w-56'>
         
+        {/* Main content */}
+        <div className='flex flex-col h-full justify-center items-center p-6'>
+          
+          {/* Plus icon with glow effect */}
+          <div className='relative mb-4'>
+            <div className="absolute inset-0 bg-orange-400 rounded-full blur opacity-20 group-hover:opacity-30 transition-opacity duration-200" />
+            <div className='relative p-6 bg-white rounded-full shadow-lg group-hover:shadow-xl transition-shadow duration-200'>
+              <Plus className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform duration-200" />
+            </div>
+          </div>
+          
+          {/* Text */}
+          <h3 className='font-semibold text-lg text-gray-800 mb-2 text-center'>
+            Create New Resume
+          </h3>
+          <p className='text-sm text-gray-600 text-center'>
+            Start building your professional resume
+          </p>
+          
+          
+          
+        </div>
+      </div>
+    </div>
         {
-          resumeList.map((item,index)=>(<ListCard key={index} item={item}/>))
+          filteredData1.length>0?filteredData1.map((item,index)=>(<ListCard key={index} item={item}/>)):""
         }
         
       </div>

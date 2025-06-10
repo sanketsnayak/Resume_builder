@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 import { Oval } from 'react-loader-spinner'
+import { FileText, Trash2, Calendar } from 'lucide-react'
 
 function ListCard({item}) {
 const [loading,setLoading]=useState(false)
+
 const onDelete= async(e)=>{
     e.stopPropagation(); 
     e.preventDefault();
@@ -31,25 +32,72 @@ const onDelete= async(e)=>{
       setLoading(false)
     }
 }
+
+const handleCardClick = () => {
+    window.location.href = `/dashboard/resume/${item._id}`;
+}
+
+const formatDate = (dateString) => {
+  if (!dateString) return 'Recently created'
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
   
   return (
-    <Link to={`/dashboard/resume/${item._id}`}>
-    <div className=' relative  h-[30vh] w-[15vw] bg-secondary flex  border-2 rounded  hover:scale-105 transition-all hover:shadow-md'>
-      <div className='flex justify-center h-[80%] items-center w-full'>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-      </div>
-    
-      <div className='absolute px-2 pl-4 py-1.5 bg-stone-400 text-lg font-semibold flex justify-between w-full  bottom-0 text-[#303030]'>
+    <div 
+      className='cursor-pointer group'
+      onClick={handleCardClick}
+    >
+      <div className='bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden h-64 w-56'>
         
-        {item.title}
-        <Button variant="outline" className="" onClick={onDelete}>{loading?(<div className="col-span-3 flex items-center justify-center">
-                              <Oval height={40} width={40} color="white" ariaLabel="loading" />
-                            </div>):<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>}</Button>
+        {/* Main content */}
+        <div className='flex flex-col h-full'>
+          
+          {/* Icon section */}
+          <div className='flex-1 flex flex-col justify-center items-center p-6'>
+            <div className='p-4 bg-orange-50 rounded-lg mb-3'>
+              <FileText className="w-8 h-8 text-orange-600" />
+            </div>
+            
+            <div className='px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium'>
+              Ready
+            </div>
+          </div>
+          
+          {/* Footer section */}
+          <div className='bg-gray-50 border-t border-gray-100 p-4'>
+            <h3 className='font-semibold text-gray-900 mb-2 truncate'>
+              {item.title || 'Untitled Resume'}
+            </h3>
+            
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-1 text-xs text-gray-500'>
+                <Calendar className="w-3 h-3" />
+                <span>{formatDate(item.createdAt || item.updatedAt)}</span>
+              </div>
+              
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="p-1.5 h-7 w-7 border-gray-200 hover:border-red-300 hover:bg-red-50" 
+                onClick={onDelete}
+                disabled={loading}
+              >
+                {loading ? (
+                  <Oval height={12} width={12} color="#ef4444" ariaLabel="loading" />
+                ) : (
+                  <Trash2 className="w-3 h-3 text-red-500" />
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-        
-                            
     </div>
-    </Link>
   )
 }
 
