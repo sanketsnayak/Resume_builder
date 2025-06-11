@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Oval } from 'react-loader-spinner'
 import { FileText, Trash2, Calendar } from 'lucide-react'
-
+import { toast } from 'sonner'
 function ListCard({item}) {
 const [loading,setLoading]=useState(false)
 
@@ -30,6 +30,7 @@ const onDelete= async(e)=>{
       console.log(err)
     }finally{
       setLoading(false)
+      toast('The resume deleted Successfully!')
     }
 }
 

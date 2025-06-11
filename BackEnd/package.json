@@ -11,10 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.5.16",
     "cors": "^2.8.5",
+    "csv-parse": "^5.6.0",
     "express": "^5.1.0",
     "mongodb": "^6.16.0",
     "mongoose": "^8.13.2",
+    "multer": "^2.0.1",
     "nodemon": "^3.1.10"
   }
 }

@@ -6,6 +6,7 @@ import Signin from "./pages/Signin"
 import Resume from "./pages/Resume"
 import { useUser } from "@clerk/clerk-react"
 import Download from "./components/FormSection/Download"
+import UploadLinkedIn from "./components/UploadLinkedIn"
 import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
 import Dummy from "./data/Dummy"
@@ -33,6 +34,7 @@ function App() {
         </Route>
         <Route path="/signin" element={<Signin/>}/>
         <Route path="dashboard/resume/:id/download" element={<Download/>}/>
+        <Route path="/uploadLinkedIn" element={<UploadLinkedIn/>}/>
       </Routes>
     </BrowserRouter>
     </ResumeInfoContext.Provider>
