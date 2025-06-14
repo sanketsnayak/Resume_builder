@@ -25,6 +25,8 @@ router1.post('/uploadLinkedIn', upload.single('file'), (req, res) => {
     const education=getCSV("Education.csv")
     const positions=getCSV("Positions.csv")
     const skills=getCSV("Skills.csv")
+    const phoneNumber=getCSV("PhoneNumbers.csv")
+    const email=getCSV("Email Addresses.csv")
     fs.unlinkSync(req.file.path); // cleanup
 
     res.json({
@@ -35,7 +37,9 @@ router1.post('/uploadLinkedIn', upload.single('file'), (req, res) => {
         certifications,
         education,
         positions,
-        skills
+        skills,
+        phoneNumber,
+        email
       }
     });
   } catch (err) {

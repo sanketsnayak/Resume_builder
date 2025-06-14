@@ -6,11 +6,7 @@ function LinkedInUploadPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
   const [uploadedData, setUploadedData] = useState(null);
-  const [profile,setProfile]=useState(null)
-  const [certification,setCertification]=useState(null)
-  const [skills,setSkills]=useState(null)
-  const [education,setEducation]=useState(null)
-  const [positions,setPositions]=useState(null)
+  
   
   const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
   const handleUpload = async (e) => {
@@ -32,11 +28,17 @@ function LinkedInUploadPage() {
       if (data.success) {
         console.log("LinkedIn Data:", data.data);
         setUploadedData(data.data);
-        setProfile(data.data.profile)
-        setCertification(data.data.certifications)
-        setEducation(data.data.education)
-        setSkills(data.data.skills)
-        setPositions(data.data.positions)
+        
+        setResumeInfo(prev=>({
+          ...prev,
+          firstName: data?.data?.profile?.[0]?.["First Name"] || prev.firstName || "",
+          lastName: data?.data?.profile?.[0]?.["Last Name"] || prev.lastName || "",
+          jobTitle:data?.data?.profile?.[0]?.HeadLine|| prev.jobTitle || "",
+          address:data?.data?.profile?.[0]?.Address || prev.address || "",
+          phone: data?.data?.phoneNumber?.[1]?.Number || prev.phone || "",
+          email:data?.data?.email?.[0]?.["Email Address"] || prev.email || "",
+          summery:data?.data?.profile?.[0]?.Summary || prev.summery || ""
+        }))
         setUploadStatus('success');
         setCurrentStep(3);
       } else {
@@ -48,6 +50,9 @@ function LinkedInUploadPage() {
     }
   };
   
+  useEffect(() => {
+    console.log(resumeInfo.lastName)
+  }, [resumeInfo.lastName])
   
 
 
