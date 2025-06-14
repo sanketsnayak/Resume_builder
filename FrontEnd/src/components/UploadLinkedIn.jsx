@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Download, Upload, CheckCircle, ExternalLink, FileText, ArrowRight } from 'lucide-react';
+import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 
 function LinkedInUploadPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
   const [uploadedData, setUploadedData] = useState(null);
-
+  const [profile,setProfile]=useState(null)
+  const [certification,setCertification]=useState(null)
+  const [skills,setSkills]=useState(null)
+  const [education,setEducation]=useState(null)
+  const [positions,setPositions]=useState(null)
+  
+  const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -25,6 +32,11 @@ function LinkedInUploadPage() {
       if (data.success) {
         console.log("LinkedIn Data:", data.data);
         setUploadedData(data.data);
+        setProfile(data.data.profile)
+        setCertification(data.data.certifications)
+        setEducation(data.data.education)
+        setSkills(data.data.skills)
+        setPositions(data.data.positions)
         setUploadStatus('success');
         setCurrentStep(3);
       } else {
@@ -35,6 +47,10 @@ function LinkedInUploadPage() {
       setUploadStatus('error');
     }
   };
+  
+  
+
+
 
   const steps = [
     {
@@ -60,7 +76,7 @@ function LinkedInUploadPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white p-6">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
+        
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Import from <span className="text-orange-600">LinkedIn</span>
@@ -70,7 +86,7 @@ function LinkedInUploadPage() {
           </p>
         </div>
 
-        {/* Progress Steps */}
+        
         <div className="mb-12">
           <div className="flex items-center justify-center">
             {steps.map((step, index) => (
@@ -104,7 +120,7 @@ function LinkedInUploadPage() {
           </div>
         </div>
 
-        {/* Step 1: Download Instructions */}
+        
         {currentStep === 1 && (
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div className="flex items-center gap-4 mb-6">
@@ -162,7 +178,7 @@ function LinkedInUploadPage() {
           </div>
         )}
 
-        {/* Step 2: Upload */}
+        
         {currentStep === 2 && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center gap-4 mb-6">
