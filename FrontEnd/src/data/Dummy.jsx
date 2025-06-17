@@ -111,5 +111,13 @@ export default{
             major:'Computer Science',
             description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
         },
+    ],
+    Certification:[
+        {
+            id:1,
+            Authority:"NPTEL",
+            Name: "Problem Solving through Programming in C",
+            StartedOn:"May 2024"
+        }
     ]
 }

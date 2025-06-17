@@ -1,12 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Download, Upload, CheckCircle, ExternalLink, FileText, ArrowRight } from 'lucide-react';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
-
+import { useUser } from '@clerk/clerk-react';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
 function LinkedInUploadPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
   const [uploadedData, setUploadedData] = useState(null);
-  
+  const {user}=useUser();
+  const [dialogOpen,setDialogOpen]=useState(false)
+  const [title,setTitle]=useState("")
+  const [loading,setloading]=useState(false)
+  console.log(user)
   
   const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
   const handleUpload = async (e) => {
@@ -26,7 +38,7 @@ function LinkedInUploadPage() {
 
       const data = await res.json();
       if (data.success) {
-        console.log("LinkedIn Data:", data.data);
+        //console.log("LinkedIn Data:", data.data);
         setUploadedData(data.data);
         
         setResumeInfo(prev=>({
@@ -37,7 +49,46 @@ function LinkedInUploadPage() {
           address:data?.data?.profile?.[0]?.Address || prev.address || "",
           phone: data?.data?.phoneNumber?.[1]?.Number || prev.phone || "",
           email:data?.data?.email?.[0]?.["Email Address"] || prev.email || "",
-          summery:data?.data?.profile?.[0]?.Summary || prev.summery || ""
+          summery:data?.data?.profile?.[0]?.Summary || prev.summery || "",
+          skills: Array.isArray(data?.data?.skills)
+          ? data.data.skills.map((skill, idx) => ({
+          id: idx + 1,
+          name: skill.Name || "",
+          rating: 3 
+          }))
+          : prev.skills || [],
+          Education: Array.isArray(data?.data?.education)
+          ? data.data.education.map((edu, idx) => ({
+          id: idx + 1,
+          universityName: edu["School Name"] || "",
+          startDate: edu["Start Date"] || "",
+          endDate: edu["End Date"] || "",
+          degree: edu["Degree Name"] || "",
+          major: "", 
+          description: edu["Notes"] || "" 
+          }))
+          : prev.Education || [],
+          Experience: Array.isArray(data?.data?.positions)
+          ? data.data.positions.map((pos, idx) => ({
+          id: idx + 1,
+          title: pos["Title"] || "",
+          companyName: pos["Company Name"] || "",
+          city: "", 
+          state: "",
+          startDate: pos["Started On"] || "",
+          endDate: pos["Finished On"] || "",
+          currentlyWorking: !pos["Finished On"], 
+          workSummery: pos["Description"] || ""
+          }))
+          : prev.Experience || [],
+          Certification: Array.isArray(data?.data?.certifications)
+          ? data.data.certifications.map((cert, idx) => ({
+          id: idx + 1,
+          Authority: cert["Authority"] || "",
+          Name: cert["Name"] || "",
+          StartedOn: cert["Started On"] || "",
+      }))
+    : prev.Certification || []
         }))
         setUploadStatus('success');
         setCurrentStep(3);
@@ -50,9 +101,10 @@ function LinkedInUploadPage() {
     }
   };
   
-  useEffect(() => {
-    console.log(resumeInfo.lastName)
-  }, [resumeInfo.lastName])
+  
+  /*useEffect(() => {
+    console.log(resumeInfo.Certification)
+  }, [resumeInfo.Certification])*/
   
 
 
@@ -79,6 +131,7 @@ function LinkedInUploadPage() {
   ];
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white p-6">
       <div className="max-w-4xl mx-auto">
         
@@ -267,6 +320,24 @@ function LinkedInUploadPage() {
         )}
       </div>
     </div>
+    <Dialog open={dialogOpen}>
+       <DialogContent>
+     <DialogHeader>
+       <DialogTitle>Create New Resume</DialogTitle>
+       <DialogDescription>
+         Start building your Resume by giving name to the project
+         <Input onChange={(e)=>setTitle(e.target.value)} className="my-2 text-[#141414]" placeholder="Ex. My Resume"/>
+       </DialogDescription>
+       <div className="flex justify-end gap-5">
+         <Button onClick={()=>setDialogOpen(false)} variant="ghost">Cancel</Button>
+         <Button disabled={!title} >{loading?(<div className="col-span-3 flex items-center justify-center">
+      <Oval height={40} width={40} color="white" ariaLabel="loading" />
+    </div>):"Create"}</Button>
+       </div>
+     </DialogHeader>
+   </DialogContent>
+ </Dialog>
+ </>
   );
 }
 
