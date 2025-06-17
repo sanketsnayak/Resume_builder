@@ -2,6 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Download, Upload, CheckCircle, ExternalLink, FileText, ArrowRight } from 'lucide-react';
 import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 import { useUser } from '@clerk/clerk-react';
+import { Oval } from "react-loader-spinner"
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 import {
     Dialog,
     DialogContent,
@@ -18,7 +22,8 @@ function LinkedInUploadPage() {
   const [dialogOpen,setDialogOpen]=useState(false)
   const [title,setTitle]=useState("")
   const [loading,setloading]=useState(false)
-  console.log(user)
+  const navigate=useNavigate()
+  
   
   const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
   const handleUpload = async (e) => {
@@ -26,6 +31,7 @@ function LinkedInUploadPage() {
     if (!file) return;
 
     setUploadStatus('uploading');
+    
     
     try {
       const formData = new FormData();
@@ -102,12 +108,85 @@ function LinkedInUploadPage() {
   };
   
   
-  /*useEffect(() => {
-    console.log(resumeInfo.Certification)
-  }, [resumeInfo.Certification])*/
+  useEffect(() => {
+    console.log(resumeInfo)
+  }, [resumeInfo])
   
+ const personalDetails=async({id})=>{
+    try{
+            await fetch('http://localhost:8000/api/personalDetails',{
+                method:'POST',
+                mode:"cors",
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body:JSON.stringify({
+                        userId:user.id,
+                        ResumeID:id,
+                        firstName:resumeInfo.firstName,
+                        lastName:resumeInfo.lastName,
+                        jobTitle:resumeInfo.jobTitle,
+                        address:resumeInfo.address,
+                        phone:resumeInfo.phone,
+                        email:resumeInfo.email,
+                        themeColor:resumeInfo.themeColor
+                  })
 
+            }).then(res=>res.json()).then((data)=>{
+                if(data.success){
+                    console.log(data.message)
+                }
+            })
+        }catch(err){
+            console.log(err)
+        }
+ }
 
+        const exper=async({id})=>{
+            try{
+        await fetch('http://localhost:8000/api/addExperience',{
+          mode:"cors",
+          method:"POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body:JSON.stringify({
+              userId:user.id,
+              ResumeID:id,
+              Experience:resumeInfo.Experience
+          })
+        }).then(res=>res.json()).then(data=>{
+          if(data.success){
+            console.log(data.message)
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }
+        }
+
+        const edu=async({id})=>{
+            try{
+           await fetch('http://localhost:8000/api/addEducation',{
+                mode:"cors",
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body:JSON.stringify({
+                    userId:user.id,
+                    ResumeID:id,
+                    Education:resumeInfo.Education
+                })
+           }).then(res=>res.json()).then(data=>{
+             if(data.success){
+                console.log(data.message)
+             }
+           })
+        }catch(err){
+            console.log(err)
+        }
+        }
 
   const steps = [
     {
@@ -129,6 +208,37 @@ function LinkedInUploadPage() {
       completed: uploadStatus === 'success'
     }
   ];
+
+  const handleCreate=async()=>{
+    try{
+      setloading(true)
+      await fetch('http://localhost:8000/api/CreateResume',{
+        mode:'cors',
+        method:'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:user.id,
+          title:title
+        })
+      }).then(res=>res.json()).then((data)=>{
+        if(data.success){
+        personalDetails({ id: data.resumeId })
+        exper({ id: data.resumeId })
+        edu({ id: data.resumeId })
+        setTitle("")
+        setDialogOpen(false)
+        navigate(`/dashboard/resume/${data.resumeId}`)
+        
+      }
+      })
+    }catch(err){
+      console.log(err)
+    }finally{
+      setloading(false)
+    }
+  }
 
   return (
     <>
@@ -312,7 +422,7 @@ function LinkedInUploadPage() {
               <p className="text-gray-600 mb-8 max-w-md mx-auto">
                 Your LinkedIn profile data has been processed. You can now generate your professional resume.
               </p>
-              <button className="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-lg hover:from-orange-700 hover:to-orange-800 transition-all duration-200 font-medium shadow-lg hover:shadow-xl">
+              <button onClick={()=>setDialogOpen(true)} className="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-lg hover:from-orange-700 hover:to-orange-800 transition-all duration-200 font-medium shadow-lg hover:shadow-xl">
                 Generate My Resume
               </button>
             </div>
@@ -330,7 +440,7 @@ function LinkedInUploadPage() {
        </DialogDescription>
        <div className="flex justify-end gap-5">
          <Button onClick={()=>setDialogOpen(false)} variant="ghost">Cancel</Button>
-         <Button disabled={!title} >{loading?(<div className="col-span-3 flex items-center justify-center">
+         <Button disabled={!title} onClick={handleCreate} >{loading?(<div className="col-span-3 flex items-center justify-center">
       <Oval height={40} width={40} color="white" ariaLabel="loading" />
     </div>):"Create"}</Button>
        </div>
