@@ -2,54 +2,63 @@ import { BarChart3, CreditCard, DollarSign, FileText, Home, Search, Settings, Tr
 import { useState } from "react"
 import { UserButton } from "@clerk/clerk-react"
 import { useUser } from "@clerk/clerk-react"
+import { useNavigate } from "react-router-dom"
 
 const menuItems = [
   {
     title: "Dashboard",
     icon: Home,
     isActive: true,
+    url:"/dashboard"
   },
   {
     title: "Create Resume",
     icon: BarChart3,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "Resume Templates",
     icon: CreditCard,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "linkedIn Resume",
     icon: TrendingUp,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "Spend Groups",
     icon: Users,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "Integrations",
     icon: Zap,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "Payees",
     icon: Users,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
   {
     title: "Invoices",
     icon: FileText,
     isActive: false,
+    url:"/uploadLinkedIn"
   },
 ]
 
 export function AppSidebar() {
   const [activeItem, setActiveItem] = useState("Dashboard")
   const {user} = useUser()
-  console.log(user)
+  const navigate=useNavigate()
   
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-white to-gray-50 border-r border-gray-200/50 shadow-lg flex flex-col">
@@ -89,7 +98,7 @@ export function AppSidebar() {
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
           {menuItems.map((item) => (
-            <li key={item.title}>
+            <li key={item.title} onClick={()=>navigate(item.url)}>
               <button
                 onClick={() => setActiveItem(item.title)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 group ${

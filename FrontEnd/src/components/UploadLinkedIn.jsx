@@ -188,6 +188,53 @@ function LinkedInUploadPage() {
         }
         }
 
+        const skill=async({id})=>{
+            try{
+        await fetch('http://localhost:8000/api/addSkills',{
+          mode:"cors",
+          method:"POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body:JSON.stringify({
+            userId:user.id,
+            ResumeID:id,
+            Skills:resumeInfo.skills
+          })
+        }).then(res=>res.json()).then(data=>{
+          if(data.success){
+            console.log(data.message)
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }
+        }
+
+      const summ=async({id})=>{
+        try{
+          await fetch('http://localhost:8000/api/addSummary',{
+            mode:"cors",
+            method:"POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body:JSON.stringify({
+              userId:user.id,
+              ResumeID:id,
+              Summary:resumeInfo.summery
+            })
+          }).then(res=>res.json()).then((data)=>{
+            if(data.success){
+              console.log(data.message)
+            }
+            
+          })
+        }catch(err){
+          console.log(err)
+        }
+      }
+
   const steps = [
     {
       number: 1,
@@ -227,6 +274,8 @@ function LinkedInUploadPage() {
         personalDetails({ id: data.resumeId })
         exper({ id: data.resumeId })
         edu({ id: data.resumeId })
+        skill({id:data.resumeId})
+        summ({id:data.resumeId})
         setTitle("")
         setDialogOpen(false)
         navigate(`/dashboard/resume/${data.resumeId}`)

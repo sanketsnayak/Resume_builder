@@ -10,7 +10,7 @@ const upload = multer({ dest: 'uploads/' });
 router1.post('/uploadLinkedIn', upload.single('file'), (req, res) => {
   try {
     const zip = new AdmZip(req.file.path);
-    console.log("ZIP entries:", zip.getEntries().map(e => e.entryName));
+    
     
     const getCSV = (filename) => {
       const entry = zip.getEntries().find(e => e.entryName.endsWith(filename));

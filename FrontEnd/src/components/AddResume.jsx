@@ -26,7 +26,7 @@ function AddResume({search}) {
     const filteredData1 = resumeList.filter(item =>
     item.title.toLowerCase().includes(search.toLowerCase())
   );
-
+  
 
   const handleCreate=async()=>{
     try{
