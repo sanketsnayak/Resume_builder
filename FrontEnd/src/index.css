@@ -135,8 +135,27 @@
   --muted: #e5e7eb;
   --accent: #10b981;
 }
+.resume-preview-wrapper {
+  width: 65vw;
+  margin: 60px auto;
+}
+.main-download-wrapper {
+  margin-top: 2.5rem; /* same as mt-10 */
+}
 
 @media print{
+  .resume-preview-wrapper {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .main-download-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
   .no-print{
     display: none;
   }

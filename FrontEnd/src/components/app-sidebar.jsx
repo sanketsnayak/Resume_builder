@@ -1,4 +1,4 @@
-import { BarChart3, CreditCard, DollarSign, FileText, Home, Search, Settings, TrendingUp, Users, Zap } from "lucide-react"
+import { BarChart3, CreditCard, DollarSign, FileText, Home, Search, Settings, TrendingUp, Users, Zap, Lightbulb, Palette } from "lucide-react"
 import { useState } from "react"
 import { UserButton } from "@clerk/clerk-react"
 import { useUser } from "@clerk/clerk-react"
@@ -11,12 +11,7 @@ const menuItems = [
     isActive: true,
     url:"/dashboard"
   },
-  {
-    title: "Create Resume",
-    icon: BarChart3,
-    isActive: false,
-    url:"/uploadLinkedIn"
-  },
+  
   {
     title: "Resume Templates",
     icon: CreditCard,
@@ -30,29 +25,17 @@ const menuItems = [
     url:"/uploadLinkedIn"
   },
   {
-    title: "Spend Groups",
-    icon: Users,
-    isActive: false,
-    url:"/uploadLinkedIn"
+  title: "AI Writing Tips",
+  icon: Lightbulb,
+  isActive: false,
+  url: "/ai-tips"
   },
   {
-    title: "Integrations",
-    icon: Zap,
-    isActive: false,
-    url:"/uploadLinkedIn"
-  },
-  {
-    title: "Payees",
-    icon: Users,
-    isActive: false,
-    url:"/uploadLinkedIn"
-  },
-  {
-    title: "Invoices",
-    icon: FileText,
-    isActive: false,
-    url:"/uploadLinkedIn"
-  },
+  title: "Theme Editor",
+  icon: Palette,
+  isActive: false,
+  url: "/themes"
+}
 ]
 
 export function AppSidebar() {
@@ -60,8 +43,9 @@ export function AppSidebar() {
   const {user} = useUser()
   const navigate=useNavigate()
   
+  
   return (
-    <div className="w-64 h-screen bg-gradient-to-b from-white to-gray-50 border-r border-gray-200/50 shadow-lg flex flex-col">
+    <div className="w-64 h-screen bg-gradient-to-b from-white to-gray-50 border-r border-gray-200/50 shadow-lg flex flex-col ">
       {/* Header Section */}
       <div className="p-6 border-b border-gray-200/50 bg-white/80 backdrop-blur-sm">
         {/* User Profile */}

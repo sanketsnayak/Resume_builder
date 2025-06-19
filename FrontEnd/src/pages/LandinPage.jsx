@@ -17,11 +17,11 @@ import {
   Sparkles,
 } from "lucide-react"
 import { useState, useEffect } from "react"
-
+import { useNavigate } from "react-router-dom"
 const ResumeBuilderLanding = () => {
   const [isVisible, setIsVisible] = useState({})
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
-
+  const navigate=useNavigate()
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -108,7 +108,7 @@ const ResumeBuilderLanding = () => {
                   faster with expert guidance and ATS-friendly templates.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="group bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl transform">
+                  <button onClick={()=>navigate("/dashboard")} className="group bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl transform">
                     <span className="flex items-center justify-center gap-2">
                       Build My Resume
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -122,27 +122,8 @@ const ResumeBuilderLanding = () => {
                   </button>
                 </div>
                 <div className="mt-8 flex items-center">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-red-400 border-3 border-white shadow-lg animate-pulse"
-                        style={{ animationDelay: `${i * 200}ms` }}
-                      />
-                    ))}
-                  </div>
-                  <div className="ml-4">
-                    <div className="flex items-center">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <Star
-                          key={i}
-                          className="w-5 h-5 fill-current text-yellow-400 animate-pulse"
-                          style={{ animationDelay: `${i * 100}ms` }}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-sm text-gray-600 font-medium">Trusted by over 3 million job seekers</p>
-                  </div>
+                  
+                  
                 </div>
               </div>
             </div>
@@ -208,19 +189,19 @@ const ResumeBuilderLanding = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8" data-animate id="features-grid">
             {[
               {
-                icon: <Clock className="w-10 h-10 text-orange-500" />,
+                icon: <Clock className="w-10 h-10 text-white" />,
                 title: "Quick & Easy",
                 description: "Create a professional resume in just minutes with our intuitive builder.",
                 color: "from-orange-500 to-red-500",
               },
               {
-                icon: <Award className="w-10 h-10 text-blue-500" />,
+                icon: <Award className="w-10 h-10 text-white" />,
                 title: "ATS-Friendly Templates",
                 description: "Our templates are designed to pass Applicant Tracking Systems.",
                 color: "from-blue-500 to-purple-500",
               },
               {
-                icon: <Users className="w-10 h-10 text-green-500" />,
+                icon: <Users className="w-10 h-10 text-white" />,
                 title: "Expert Reviewed",
                 description: "Templates and advice reviewed by HR professionals and hiring managers.",
                 color: "from-green-500 to-teal-500",
@@ -307,7 +288,7 @@ const ResumeBuilderLanding = () => {
       </section>
 
       {/* Templates Showcase */}
-      <section className="py-16 bg-white">
+      <section className="py-16 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16" data-animate id="templates-header">
             <div
@@ -326,7 +307,7 @@ const ResumeBuilderLanding = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" data-animate id="templates-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 blur-md" data-animate id="templates-grid ">
             {[1, 2, 3, 4, 5, 6].map((template) => (
               <div
                 key={template}
@@ -379,7 +360,7 @@ const ResumeBuilderLanding = () => {
           </div>
 
           {/* Animated testimonial carousel */}
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto blur-lg">
             <div className="relative h-64 overflow-hidden">
               {testimonials.map((testimonial, index) => (
                 <div
@@ -464,12 +445,12 @@ const ResumeBuilderLanding = () => {
               {
                 question: "Can I download my resume in different formats?",
                 answer:
-                  "Yes, you can download your resume in PDF, Word, and plain text formats. PDF is recommended for most job applications as it preserves your formatting.",
+                  "No, you can download your resume in PDF format. PDF is recommended for most job applications as it preserves your formatting.",
               },
               {
                 question: "Is the resume builder free to use?",
                 answer:
-                  "We offer both free and premium options. The free version includes basic templates and features, while the premium version provides access to all templates, advanced features, and unlimited downloads.",
+                  "We offer both free and premium options. The free version includes basic templates and features.",
               },
             ].map((faq, index) => (
               <div
@@ -499,7 +480,7 @@ const ResumeBuilderLanding = () => {
               <p className="text-xl text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed">
                 Create a professional resume in minutes and increase your chances of getting hired.
               </p>
-              <button className="group bg-white hover:bg-gray-100 text-orange-500 px-10 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl transform">
+              <button onClick={()=>navigate("/dashboard")} className="group bg-white hover:bg-gray-100 text-orange-500 px-10 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl transform">
                 <span className="flex items-center justify-center gap-2">
                   Build My Resume Now
                   <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
@@ -512,90 +493,97 @@ const ResumeBuilderLanding = () => {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4 hover:scale-105 transition-transform duration-300">
-                resume<span className="text-orange-500">genius</span>
-              </h3>
-              <p className="text-gray-400 mb-4 leading-relaxed">
-                Professional resume builder helping job seekers land their dream jobs since 2015.
-              </p>
-              <div className="flex space-x-4">
-                {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 transform"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
-            </div>
+  <div className="container mx-auto px-4">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <h3 className="text-xl font-bold mb-4 hover:scale-105 transition-transform duration-300">
+          <span className="text-orange-500">AI</span> Resume Builder
+        </h3>
+        <p className="text-gray-400 mb-4 leading-relaxed">
+          Build your professional resume in minutes with AI-powered suggestions, LinkedIn import, and modern templates.
+        </p>
+        <div className="flex space-x-4">
+          {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
+            <a
+              key={index}
+              href="#"
+              className="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 transform"
+            >
+              <Icon className="w-5 h-5" />
+            </a>
+          ))}
+        </div>
+      </div>
 
-            {[
-              {
-                title: "Resume Builder",
-                links: [
-                  "Create Resume",
-                  "Resume Templates",
-                  "Resume Examples",
-                  "Resume Format",
-                  "How to Write a Resume",
-                ],
-              },
-              {
-                title: "Cover Letters",
-                links: [
-                  "Create Cover Letter",
-                  "Cover Letter Templates",
-                  "Cover Letter Examples",
-                  "Cover Letter Format",
-                  "How to Write a Cover Letter",
-                ],
-              },
-              {
-                title: "Resources",
-                links: ["Job Search Tips", "Interview Preparation", "Career Advice", "Blog", "Help Center"],
-              },
-            ].map((section, index) => (
-              <div key={index}>
-                <h4 className="font-bold mb-4 text-lg">{section.title}</h4>
-                <ul className="space-y-3">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <a
-                        href="#"
-                        className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 transform inline-block"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} ResumeGenius. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
-              {["Privacy Policy", "Terms of Service", "Contact Us"].map((link, index) => (
+      {[
+        {
+          title: "Resume Tools",
+          links: [
+            "Dashboard",
+            "LinkedIn Data Import",
+            "Experience",
+            "Skills",
+            "Certifications",
+            "Theme & Preview",
+          ],
+        },
+        {
+          title: "Features",
+          links: [
+            "AI Summary Generator",
+            "ATS-Friendly Templates",
+            "One-Click Download",
+            "Live Preview",
+            "Customizable Themes",
+          ],
+        },
+        {
+          title: "Support",
+          links: [
+            "Help Center",
+            "FAQ",
+            "Contact Support",
+            "Feedback",
+            "Blog",
+          ],
+        },
+      ].map((section, index) => (
+        <div key={index}>
+          <h4 className="font-bold mb-4 text-lg">{section.title}</h4>
+          <ul className="space-y-3">
+            {section.links.map((link, linkIndex) => (
+              <li key={linkIndex}>
                 <a
-                  key={index}
                   href="#"
-                  className="text-gray-400 hover:text-white transition-all duration-300 text-sm hover:scale-105 transform"
+                  className="text-gray-400 hover:text-white transition-all duration-300 hover:translate-x-1 transform inline-block"
                 >
                   {link}
                 </a>
-              ))}
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      </footer>
+      ))}
+    </div>
+
+    <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        © {new Date().getFullYear()} AI Resume Builder. All rights reserved.
+      </p>
+      <div className="flex space-x-6">
+        {["Privacy Policy", "Terms of Service", "Contact Us"].map((link, index) => (
+          <a
+            key={index}
+            href="#"
+            className="text-gray-400 hover:text-white transition-all duration-300 text-sm hover:scale-105 transform"
+          >
+            {link}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>
     </div>
   )
 }

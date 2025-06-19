@@ -14,7 +14,7 @@ function Resume() {
   
   return (
     
-    <div className='grid grid-cols-2 p-10 gap-10'>
+    <div className='grid grid-cols-2 p-10 gap-10 pt-20'>
         <FromSection />
         
         <ResumePreview/>

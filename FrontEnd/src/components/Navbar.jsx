@@ -7,7 +7,7 @@ import { UserButton, useUser } from '@clerk/clerk-react'
 function Navbar() {
     const {user,isSignedIn}=useUser()
   return (
-    <div className='flex justify-between px-5 py-2 items-center shadow-lg'>
+    <div className='flex justify-between px-5 py-2 items-center shadow-lg fixed top-0 left-0 w-full z-50 backdrop-blur-md'>
         <img src="/logo.svg" alt="" height={100} width={100} />
         {isSignedIn?
         <div className=' flex items-center gap-3'>
