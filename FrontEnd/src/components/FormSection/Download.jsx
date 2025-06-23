@@ -149,6 +149,7 @@ function Download() {
     
     
   return (
+  <>
     < div className='main-download-wrapper'>
     <div class="no-print">
     <Navbar/>
@@ -171,6 +172,7 @@ function Download() {
         </div>
     </div>
     </div>
+    </>
   )
 }
 
