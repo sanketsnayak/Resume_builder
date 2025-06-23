@@ -6,6 +6,12 @@ import dotenv from "dotenv"
 import mongoose from "mongoose"
 const app=express()
 dotenv.config()
+
+const corsConfig = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  method: ["GET", "POST", "PUT", "DELETE"],
+};
 const dbConnect=async()=>{
     try{
        await mongoose.connect(`mongodb+srv://sanketsnayak89:${process.env.MONGODB_PASS}@cluster0.j30tcpw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
@@ -17,7 +23,10 @@ const dbConnect=async()=>{
 
 dbConnect()
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsConfig))
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 app.use('/api',router)
 app.use('/api',router1)
 
