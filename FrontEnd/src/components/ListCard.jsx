@@ -11,7 +11,7 @@ const onDelete= async(e)=>{
     e.preventDefault();
     setLoading(true)
     try{
-      await fetch('http://localhost:8000/api/deleteResume',{
+      await fetch('https://resume-builder-five-smoky.vercel.app/api/deleteResume',{
         mode:"cors",
         method:"POST",
         headers: {

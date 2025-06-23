@@ -52,7 +52,7 @@ function ProfessionalExperience({enableNext}) {
     setLoading(true)
     enableNext(true)
       try{
-        await fetch('http://localhost:8000/api/addExperience',{
+        await fetch('https://resume-builder-five-smoky.vercel.app/api/addExperience',{
           mode:"cors",
           method:"POST",
           headers: {
@@ -77,7 +77,7 @@ function ProfessionalExperience({enableNext}) {
    }
 
    const getExperience=async()=>{
-      await fetch('http://localhost:8000/api/getExperience',{
+      await fetch('https://resume-builder-five-smoky.vercel.app/api/getExperience',{
         mode:"cors",
         method:"POST",
         headers: {
