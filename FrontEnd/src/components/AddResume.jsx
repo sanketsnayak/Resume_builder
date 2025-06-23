@@ -31,7 +31,7 @@ function AddResume({search}) {
   const handleCreate=async()=>{
     try{
       setloading(true)
-      await fetch('https://resume-builder-five-smoky.vercel.app/api/CreateResume',{
+      await fetch('http://localhost:8000/api/CreateResume',{
         mode:'cors',
         method:'POST',
         headers: {
@@ -56,7 +56,7 @@ function AddResume({search}) {
     }
   }
   const getResumes=async()=>{
-    await fetch('https://resume-builder-five-smoky.vercel.app/api/ListResumes',{
+    await fetch('http://localhost:8000/api/ListResumes',{
       mode:'cors',
       method:'POST',
       headers: {

@@ -31,7 +31,7 @@ function PersonalDetails({enableNext}) {
         
         enableNext(true)
         try{
-            await fetch('https://resume-builder-five-smoky.vercel.app/api/personalDetails',{
+            await fetch('http://localhost:8000/api/personalDetails',{
                 method:'POST',
                 mode:"cors",
                 headers: {
@@ -74,7 +74,7 @@ function PersonalDetails({enableNext}) {
     
     const getPersonalDetails=async()=>{
         try{
-            await fetch('https://resume-builder-five-smoky.vercel.app/api/getPersonalDetails',{
+            await fetch('http://localhost:8000/api/getPersonalDetails',{
                 mode:'cors',
                 method:'POST',
                 headers: {
@@ -120,7 +120,7 @@ function PersonalDetails({enableNext}) {
 
     const getSummary=async()=>{
       try{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/getSummary',{
+        await fetch('http://localhost:8000/api/getSummary',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -146,7 +146,7 @@ function PersonalDetails({enableNext}) {
     }
 
      const getEducation=async()=>{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/getEducation',{
+        await fetch('http://localhost:8000/api/getEducation',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -168,7 +168,7 @@ function PersonalDetails({enableNext}) {
     }
 
     const getExperience=async()=>{
-      await fetch('https://resume-builder-five-smoky.vercel.app/api/getExperience',{
+      await fetch('http://localhost:8000/api/getExperience',{
         mode:"cors",
         method:"POST",
         headers: {
@@ -190,7 +190,7 @@ function PersonalDetails({enableNext}) {
    }
 
    const getSkills=async()=>{
-    await fetch('https://resume-builder-five-smoky.vercel.app/api/getSkills',{
+    await fetch('http://localhost:8000/api/getSkills',{
       mode:"cors",
       method:"POST",
       headers: {

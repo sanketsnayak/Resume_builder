@@ -54,7 +54,7 @@ function Education({enableNext}) {
         setLoading(true)
         enableNext(true)
         try{
-           await fetch('https://resume-builder-five-smoky.vercel.app/api/addEducation',{
+           await fetch('http://localhost:8000/api/addEducation',{
                 mode:"cors",
                 method:"POST",
                 headers: {
@@ -79,7 +79,7 @@ function Education({enableNext}) {
     }
 
     const getEducation=async()=>{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/getEducation',{
+        await fetch('http://localhost:8000/api/getEducation',{
             mode:"cors",
             method:"POST",
             headers: {

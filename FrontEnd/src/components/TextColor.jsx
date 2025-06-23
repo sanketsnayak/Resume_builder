@@ -28,7 +28,7 @@ function TextColor() {
     }
 
     const handleColor=async(item)=>{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/personalDetails',{
+        await fetch('http://localhost:8000/api/personalDetails',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -47,7 +47,7 @@ function TextColor() {
     }
 
     const getThemeColor=async()=>{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/getPersonalDetails',{
+        await fetch('http://localhost:8000/api/getPersonalDetails',{
             mode:"cors",
             method:"POST",
             headers: {

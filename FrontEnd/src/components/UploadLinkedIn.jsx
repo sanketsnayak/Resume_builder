@@ -37,7 +37,7 @@ function LinkedInUploadPage() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("https://resume-builder-five-smoky.vercel.app/api/uploadLinkedIn", {
+      const res = await fetch("http://localhost:8000/api/uploadLinkedIn", {
         method: "POST",
         body: formData
       });
@@ -114,7 +114,7 @@ function LinkedInUploadPage() {
   
  const personalDetails=async({id})=>{
     try{
-            await fetch('https://resume-builder-five-smoky.vercel.app/api/personalDetails',{
+            await fetch('http://localhost:8000/api/personalDetails',{
                 method:'POST',
                 mode:"cors",
                 headers: {
@@ -144,7 +144,7 @@ function LinkedInUploadPage() {
 
         const exper=async({id})=>{
             try{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/addExperience',{
+        await fetch('http://localhost:8000/api/addExperience',{
           mode:"cors",
           method:"POST",
           headers: {
@@ -167,7 +167,7 @@ function LinkedInUploadPage() {
 
         const edu=async({id})=>{
             try{
-           await fetch('https://resume-builder-five-smoky.vercel.app/api/addEducation',{
+           await fetch('http://localhost:8000/api/addEducation',{
                 mode:"cors",
                 method:"POST",
                 headers: {
@@ -190,7 +190,7 @@ function LinkedInUploadPage() {
 
         const skill=async({id})=>{
             try{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/addSkills',{
+        await fetch('http://localhost:8000/api/addSkills',{
           mode:"cors",
           method:"POST",
           headers: {
@@ -213,7 +213,7 @@ function LinkedInUploadPage() {
 
       const summ=async({id})=>{
         try{
-          await fetch('https://resume-builder-five-smoky.vercel.app/api/addSummary',{
+          await fetch('http://localhost:8000/api/addSummary',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -259,7 +259,7 @@ function LinkedInUploadPage() {
   const handleCreate=async()=>{
     try{
       setloading(true)
-      await fetch('https://resume-builder-five-smoky.vercel.app/api/CreateResume',{
+      await fetch('http://localhost:8000/api/CreateResume',{
         mode:'cors',
         method:'POST',
         headers: {

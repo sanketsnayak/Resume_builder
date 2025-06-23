@@ -34,7 +34,7 @@ function Summary({enableNext}) {
         enableNext(true)
         
         try{
-          await fetch('https://resume-builder-five-smoky.vercel.app/api/addSummary',{
+          await fetch('http://localhost:8000/api/addSummary',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -60,7 +60,7 @@ function Summary({enableNext}) {
 
     const getSummary=async()=>{
       try{
-        await fetch('https://resume-builder-five-smoky.vercel.app/api/getSummary',{
+        await fetch('http://localhost:8000/api/getSummary',{
             mode:"cors",
             method:"POST",
             headers: {
