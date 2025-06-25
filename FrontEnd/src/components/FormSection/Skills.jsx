@@ -52,7 +52,7 @@ function Skills({enableNext}) {
       setLoading(true)
       enableNext(true)
       try{
-        await fetch('http://localhost:8000/api/addSkills',{
+        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/addSkills',{
           mode:"cors",
           method:"POST",
           headers: {
@@ -77,7 +77,7 @@ function Skills({enableNext}) {
   }
 
   const getSkills=async()=>{
-    await fetch('http://localhost:8000/api/getSkills',{
+    await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getSkills',{
       mode:"cors",
       method:"POST",
       headers: {

@@ -23,15 +23,16 @@ function AddResume({search}) {
   const [loading,setloading]=useState(false)
   const navigate=useNavigate()
 
-    const filteredData1 = resumeList.filter(item =>
-    item.title.toLowerCase().includes(search.toLowerCase())
-  );
+    const searchTerm = search || "";
+const filteredData1 = (resumeList || []).filter(item =>
+  item.title?.toLowerCase().includes(searchTerm.toLowerCase())
+);
   
 
   const handleCreate=async()=>{
     try{
       setloading(true)
-      await fetch('http://localhost:8000/api/CreateResume',{
+      await fetch('https://resume-builder-backend-nr5i.onrender.com/api/CreateResume',{
         mode:'cors',
         method:'POST',
         headers: {
@@ -56,7 +57,7 @@ function AddResume({search}) {
     }
   }
   const getResumes=async()=>{
-    await fetch('http://localhost:8000/api/ListResumes',{
+    await fetch('https://resume-builder-backend-nr5i.onrender.com/api/ListResumes',{
       mode:'cors',
       method:'POST',
       headers: {

@@ -9,6 +9,7 @@ import Download from "./components/FormSection/Download"
 import UploadLinkedIn from "./components/UploadLinkedIn"
 import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
+import ATSscore from "./pages/ATSscore"
 import Dummy from "./data/Dummy"
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
         <Route path="/dashboard" element={isSignedIn?<Dashboard/>:<Navigate to="/signin"/>} />
         <Route path="/" element={<Layout/>}>
           <Route path="" element={<LandinPage/>}/>
-          
+          <Route path="AtsScoreCheck" element={<ATSscore/>}/>
           <Route path="dashboard/resume/:id" element={<Resume/>}/>
           
         </Route>

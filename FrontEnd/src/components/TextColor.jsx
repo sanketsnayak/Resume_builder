@@ -28,7 +28,7 @@ function TextColor() {
     }
 
     const handleColor=async(item)=>{
-        await fetch('http://localhost:8000/api/personalDetails',{
+        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/personalDetails',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -47,7 +47,7 @@ function TextColor() {
     }
 
     const getThemeColor=async()=>{
-        await fetch('http://localhost:8000/api/getPersonalDetails',{
+        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getPersonalDetails',{
             mode:"cors",
             method:"POST",
             headers: {

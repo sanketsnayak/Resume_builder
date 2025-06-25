@@ -4,6 +4,7 @@ import cors from "cors"
 import router1 from "./Routes/uploadLinkedIn.js"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
+import router3 from "./Routes/AtsScore.js"
 const app=express()
 dotenv.config()
 
@@ -25,7 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use('/api',router)
 app.use('/api',router1)
-
+app.use('/api',router3)
 app.listen(8000,()=>{
     console.log("server is running on the port 8000")
 })

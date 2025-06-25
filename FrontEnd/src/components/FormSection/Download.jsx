@@ -21,7 +21,7 @@ function Download() {
 
   const getSummary=async()=>{
       try{
-        await fetch('http://localhost:8000/api/getSummary',{
+        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getSummary',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -48,7 +48,7 @@ function Download() {
 
     const getPersonalDetails=async()=>{
         try{
-            await fetch('http://localhost:8000/api/getPersonalDetails',{
+            await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getPersonalDetails',{
                 mode:'cors',
                 method:'POST',
                 headers: {
@@ -74,7 +74,7 @@ function Download() {
     }
 
      const getEducation=async()=>{
-        await fetch('http://localhost:8000/api/getEducation',{
+        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getEducation',{
             mode:"cors",
             method:"POST",
             headers: {
@@ -96,7 +96,7 @@ function Download() {
     }
 
     const getExperience=async()=>{
-      await fetch('http://localhost:8000/api/getExperience',{
+      await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getExperience',{
         mode:"cors",
         method:"POST",
         headers: {
@@ -118,7 +118,7 @@ function Download() {
    }
 
    const getSkills=async()=>{
-    await fetch('http://localhost:8000/api/getSkills',{
+    await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getSkills',{
       mode:"cors",
       method:"POST",
       headers: {
