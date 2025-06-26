@@ -11,14 +11,33 @@ function ATSscore() {
   const [loading,setLoading]=useState(false)
 
   const prompt = {
-      parts: [{ text: `resume file:${resumeFile} job description:${jobDescription} Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 linescin array format, With summery and experience_level Field in JSON Format` }]
+      parts: [{ text: `You are an expert ATS (Applicant Tracking System) resume analyzer.
+                Analyze the given resume text against the job description (JD) and respond in strict JSON format.
+                Resume:${text}, job description:${jobDescription}
+                {
+                  "overall_score": 83,
+                  "keyword_match_score": 74,
+                  "experience_relevance_score": 66,
+                  "skills_match_score": 86,
+                  "formatting_score": 77,
+                  "improvement_suggestions": [
+                    "Add more job-specific keywords from the job description.",
+                    "Reformat sections with clear headings: Experience, Skills, Education.",
+                    "Avoid using tables or columns that may confuse ATS parsers.",
+                    "Include more measurable results in previous job roles.",
+                    "Highlight more relevant projects or internships if available."
+                  ]
+                }
+                dont give perfect score like multiple of 5 all the time give accurate score.
+                user should not get doubt on my ats score checker.
+` }]
     };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       setResumeFile(file);
-      parseText()
+      
       setCurrentStep(2);
     }
   };
@@ -27,7 +46,7 @@ function ATSscore() {
     if(!resumeFile) return alert('Upload the pdf file')
     const formData = new FormData();
     formData.append("resume", resumeFile);
-    setLoading(true)
+    
     try{
         await fetch('http://localhost:8000/api/AtsScoreCheck',{
           method: "POST",
@@ -41,21 +60,42 @@ function ATSscore() {
     }catch(err){
       console.log(err)
 
-    }finally{
-      setLoading(false)
     }
   }
    useEffect(() => {
+    console.log(text)
     if (resumeFile) {
     parseText();
   }
     
     
-  }, [resumeFile]);
+  }, [resumeFile,text]);
 
   const generateScore=async()=>{
+    setLoading(true)
+    try{
     const result=await generateAIContent(prompt);
-    console.log(result)
+    let generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text || "No score generated";
+    if (generatedText.startsWith("```json")) {
+          generatedText = generatedText.replace(/```json/g, "").replace(/```/g, "").trim();
+      }
+      console.log(generatedText)
+      const parsedScore = JSON.parse(generatedText);
+      setScore({
+        overall: parsedScore?.overall_score,
+        keywords: parsedScore?.keyword_match_score,
+        formatting: parsedScore?.formatting_score,
+        experience: parsedScore?.experience_relevance_score,
+        skills: parsedScore?.skills_match_score,
+        suggestions:parsedScore?.improvement_suggestions
+      });
+    
+    }catch(err){
+      console.log(err)
+    }finally{
+      setLoading(false);
+      setCurrentStep(3);
+    }
   }
 
   const analyzeResume = async () => {
@@ -75,20 +115,7 @@ function ATSscore() {
       const keywordBonus = Math.min(keywords.length * 2, 10);
       const finalScore = Math.min(baseScore + keywordBonus, 95);
 
-      setScore({
-        overall: finalScore,
-        keywords: Math.floor(Math.random() * 20) + 70,
-        formatting: Math.floor(Math.random() * 15) + 80,
-        experience: Math.floor(Math.random() * 25) + 65,
-        skills: Math.floor(Math.random() * 20) + 75,
-        suggestions: [
-          'Add more relevant keywords from the job description',
-          'Include quantifiable achievements with numbers',
-          'Optimize section headings for ATS readability',
-          'Add technical skills section',
-          'Use standard date formats'
-        ]
-      });
+      
       setIsAnalyzing(false);
     }, 3000);
   };
@@ -113,7 +140,7 @@ function ATSscore() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 py-24 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -223,11 +250,11 @@ function ATSscore() {
             {/* Analyze Button */}
             <div className="text-center">
               <button
-                onClick={analyzeResume}
+                onClick={generateScore}
                 disabled={!resumeFile || jobDescription.length < 50 || isAnalyzing}
                 className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-8 rounded-lg transition-colors flex items-center mx-auto"
               >
-                {isAnalyzing ? (
+                {loading ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     Analyzing Resume...
@@ -292,7 +319,7 @@ function ATSscore() {
             <div className="bg-white rounded-lg shadow-lg p-8">
               <h3 className="text-xl font-bold text-gray-900 mb-6">Improvement Suggestions</h3>
               <div className="space-y-3">
-                {score.suggestions.map((suggestion, index) => (
+                {(score.suggestions || []).map((suggestion, index) => (
                   <div key={index} className="flex items-start p-3 bg-blue-50 border border-blue-200 rounded-lg">
                     <AlertCircle className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
                     <span className="text-gray-700">{suggestion}</span>
