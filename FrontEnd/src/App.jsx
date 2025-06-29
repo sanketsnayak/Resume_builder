@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard"
 import Layout from "./Layout"
 import Signin from "./pages/Signin"
 import Resume from "./pages/Resume"
+import Template1 from "./pages/Template1"
 import { useUser } from "@clerk/clerk-react"
 import Download from "./components/FormSection/Download"
 import UploadLinkedIn from "./components/UploadLinkedIn"
@@ -11,6 +12,7 @@ import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
 import ATSscore from "./pages/ATSscore"
 import Dummy from "./data/Dummy"
+
 function App() {
 
   const {user,isSignedIn,isLoaded}=useUser()
@@ -31,6 +33,7 @@ function App() {
           <Route path="" element={<LandinPage/>}/>
           <Route path="AtsScoreCheck" element={<ATSscore/>}/>
           <Route path="dashboard/resume/:id" element={<Resume/>}/>
+          <Route path="dashboard/template1/:id" element={<Template1/>}/>
           
         </Route>
         <Route path="/signin" element={<Signin/>}/>

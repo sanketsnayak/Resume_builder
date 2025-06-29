@@ -25,10 +25,10 @@ const menuItems = [
     url:"/uploadLinkedIn"
   },
   {
-  title: "AI Writing Tips",
+  title: "Analyze Score",
   icon: Lightbulb,
   isActive: false,
-  url: "/ai-tips"
+  url: "/AtsScoreCheck"
   },
   {
   title: "Theme Editor",
