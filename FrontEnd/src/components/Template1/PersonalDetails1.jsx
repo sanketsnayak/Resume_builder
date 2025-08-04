@@ -5,7 +5,7 @@ function PersonalDetails1({resumeInfo}) {
     return null;
   }
   return (
-    <div >
+    <div className='font-declare' >
         <h2 className=' font-bold text-2xl'>{resumeInfo?.firstName || ""} {resumeInfo?.lastName || ""}</h2>
         <h2 className=' font-medium text-sm'>{resumeInfo?.jobTitle || ""}</h2>
         

@@ -6,6 +6,7 @@ import UserSummary from "../models/UserSummary.js"
 import UserSkillsDetails from "../models/UserSkillsDetails.js"
 import UserEducationDetails from "../models/UserEducationDetails.js"
 import UserExperience from "../models/UserExperience.js"
+import Template from "../models/Template.js"
 const router=express.Router()
 
 router.post('/CreateResume',async(req,res)=>{
@@ -245,10 +246,32 @@ router.post('/deleteResume',async(req,res)=>{
     else{
         res.json({success:false,message:"not able to delete the resume"})
     }
-    
+})
 
-   
-    
+router.post('/addTemplate',async(req,res)=>{
+    const {userId,ResumeID,Template}=req.body
+    const user= await NewResume.findOne({_id:ResumeID,createdBy:userId})
+    if(user){
+        const template= await Template.create({
+            userId:userId,
+            ResumeID:ResumeID,
+            Template:Template
+        })
+        res.json({success:true,message:"Template added successfully"})
+    }else{
+        res.json({success:false,message:"Template not added successfully"})
+    }
+
+})
+
+router.post('/getTemplate',async(req,res)=>{
+    const {userId,ResumeID}=req.body
+    const user= await Template.findOne({userId:userId,ResumeID:ResumeID})
+    if(user){
+        res.json({success:true,message:"template found successfully",Template:user})
+    }else{
+        res.json({success:false,message:"template not found"})
+    }
 })
 
 export default router

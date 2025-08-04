@@ -32,7 +32,7 @@ const filteredData1 = (resumeList || []).filter(item =>
   const handleCreate=async()=>{
     try{
       setloading(true)
-      await fetch('https://resume-builder-backend-nr5i.onrender.com/api/CreateResume',{
+      await fetch('http://localhost:8000/api/CreateResume',{
         mode:'cors',
         method:'POST',
         headers: {
@@ -46,7 +46,7 @@ const filteredData1 = (resumeList || []).filter(item =>
         if(data.success){
         setTitle("")
         setOpenDialog(false)
-        navigate(`/dashboard/resume/${data.resumeId}`)
+        navigate(`/dashboard/templateChoice/${data.resumeId}`)
         
       }
       })
@@ -57,7 +57,7 @@ const filteredData1 = (resumeList || []).filter(item =>
     }
   }
   const getResumes=async()=>{
-    await fetch('https://resume-builder-backend-nr5i.onrender.com/api/ListResumes',{
+    await fetch('http://localhost:8000/api/ListResumes',{
       mode:'cors',
       method:'POST',
       headers: {

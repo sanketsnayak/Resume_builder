@@ -5,7 +5,7 @@ function Education1({resumeInfo}) {
     return null 
   }
   return (
-    <div className='my-4'>
+    <div className='my-4 font-declare'>
         <h2 className=' font-bold text-sm mt-4 mb-1' >Education</h2>
         <hr className='border-[] mb-1' style={{borderColor:resumeInfo?.themeColor}}/>
         {

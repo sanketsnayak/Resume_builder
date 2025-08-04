@@ -8,6 +8,7 @@ import Template1 from "./pages/Template1"
 import { useUser } from "@clerk/clerk-react"
 import Download from "./components/FormSection/Download"
 import UploadLinkedIn from "./components/UploadLinkedIn"
+import TemplatesChoice from "./components/TemplatesChoice"
 import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
 import ATSscore from "./pages/ATSscore"
@@ -32,9 +33,9 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route path="" element={<LandinPage/>}/>
           <Route path="AtsScoreCheck" element={<ATSscore/>}/>
-          <Route path="dashboard/resume/:id" element={<Resume/>}/>
+          <Route path="dashboard/template2/:id" element={<Resume/>}/>
           <Route path="dashboard/template1/:id" element={<Template1/>}/>
-          
+          <Route path="dashboard/templateChoice/:id" element={<TemplatesChoice/>}/>
         </Route>
         <Route path="/signin" element={<Signin/>}/>
         <Route path="dashboard/resume/:id/download" element={<Download/>}/>

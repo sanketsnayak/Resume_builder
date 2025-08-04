@@ -52,7 +52,7 @@ function ProfessionalExperience({enableNext}) {
     setLoading(true)
     enableNext(true)
       try{
-        await fetch('https://resume-builder-backend-nr5i.onrender.com/api/addExperience',{
+        await fetch('http://localhost:8000/api/addExperience',{
           mode:"cors",
           method:"POST",
           headers: {
@@ -77,7 +77,7 @@ function ProfessionalExperience({enableNext}) {
    }
 
    const getExperience=async()=>{
-      await fetch('https://resume-builder-backend-nr5i.onrender.com/api/getExperience',{
+      await fetch('http://localhost:8000/api/getExperience',{
         mode:"cors",
         method:"POST",
         headers: {

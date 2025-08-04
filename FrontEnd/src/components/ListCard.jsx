@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from './ui/button'
 import { Oval } from 'react-loader-spinner'
 import { FileText, Trash2, Calendar } from 'lucide-react'
 import { toast } from 'sonner'
+import { ResumeInfoContext } from '@/context/ResumeInfoContext'
+
 function ListCard({item}) {
 const [loading,setLoading]=useState(false)
-
+const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
 const onDelete= async(e)=>{
     e.stopPropagation(); 
     e.preventDefault();
     setLoading(true)
     try{
-      await fetch('https://resume-builder-backend-nr5i.onrender.com/api/deleteResume',{
+      await fetch('http://localhost:8000/api/deleteResume',{
         mode:"cors",
         method:"POST",
         headers: {
@@ -35,7 +37,7 @@ const onDelete= async(e)=>{
 }
 
 const handleCardClick = () => {
-    window.location.href = `/dashboard/resume/${item._id}`;
+    window.location.href = `/dashboard/${resumeInfo.template}/${item._id}`;
 }
 
 const formatDate = (dateString) => {
