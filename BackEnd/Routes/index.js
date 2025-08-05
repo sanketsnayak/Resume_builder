@@ -249,15 +249,15 @@ router.post('/deleteResume',async(req,res)=>{
 })
 
 router.post('/addTemplate',async(req,res)=>{
-    const {userId,ResumeID,Template}=req.body
+    const {userId,ResumeID,template}=req.body
     const user= await NewResume.findOne({_id:ResumeID,createdBy:userId})
     if(user){
-        const template= await Template.create({
+        const template1= await Template.create({
             userId:userId,
             ResumeID:ResumeID,
-            Template:Template
+            Template:template
         })
-        res.json({success:true,message:"Template added successfully"})
+        res.json({success:true,message:"Template added successfully",Template:template1})
     }else{
         res.json({success:false,message:"Template not added successfully"})
     }

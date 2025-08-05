@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 function TemplatesChoice() {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const navigate=useNavigate();
   const {id}=useParams()
+  const {user}=useUser()
   const templates = [
     {
       id: 1,
@@ -27,15 +29,34 @@ function TemplatesChoice() {
     setSelectedTemplate(templateId);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async() => {
     if (selectedTemplate) {
-      navigate(`/dashboard/template${selectedTemplate}/${id}`)
+      console.log(selectedTemplate)
+      //navigate(`/dashboard/template${selectedTemplate}/${id}`)
+      await fetch("http://localhost:8000/api/addTemplate",{
+        method:'POST',
+        mode:"cors",
+        headers: {
+              "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:user.id,
+          ResumeID:id,
+          template:selectedTemplate
+        })
+      }).then(res=>res.json()).then((data)=>{
+        if(data.success){
+          console.log(data);
+          navigate(`/dashboard/${selectedTemplate}/${id}`)
+        }
+      })
+      
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
-      {/* Main Content */}
+      
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -47,7 +68,7 @@ function TemplatesChoice() {
           </p>
         </div>
 
-        {/* Template Selection */}
+       
         <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
           {templates.map((template) => (
             <div
@@ -57,16 +78,16 @@ function TemplatesChoice() {
                   ? 'border-orange-500 shadow-orange-100' 
                   : 'border-gray-200 hover:border-gray-300'
               }`}
-              onClick={() => handleTemplateSelect(template.id)}
+              onClick={() => handleTemplateSelect(`template${template.id}`)}
             >
-              {/* Selection Indicator */}
+              
               {selectedTemplate === template.id && (
                 <div className="absolute top-4 right-4 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center z-10">
                   <Check className="w-4 h-4 text-white" />
                 </div>
               )}
 
-              {/* Template Preview */}
+              
               <div className="p-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 mb-4 h-64 flex items-center justify-center">
                   {template.id === 1 ? (
@@ -83,7 +104,7 @@ function TemplatesChoice() {
                   }
                 </div>
 
-                {/* Template Info */}
+                
                 <div className="text-center">
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{template.name}</h3>
                   <p className="text-sm text-gray-600">{template.description}</p>
@@ -93,7 +114,7 @@ function TemplatesChoice() {
           ))}
         </div>
 
-        {/* Continue Button */}
+        
         <div className="text-center">
           <button
             onClick={handleContinue}
@@ -114,7 +135,7 @@ function TemplatesChoice() {
         </div>
       </div>
 
-      {/* Footer */}
+      
       <div className="bg-white border-t mt-12">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between text-sm text-gray-600">
