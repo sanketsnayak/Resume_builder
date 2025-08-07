@@ -1,13 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, {  useState } from 'react'
 import { Button } from './ui/button'
 import { Oval } from 'react-loader-spinner'
 import { FileText, Trash2, Calendar } from 'lucide-react'
 import { toast } from 'sonner'
 import { ResumeInfoContext } from '@/context/ResumeInfoContext'
+import { useNavigate } from 'react-router-dom'
 
 function ListCard({item}) {
 const [loading,setLoading]=useState(false)
-const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
+
+const navigate=useNavigate();
 const onDelete= async(e)=>{
     e.stopPropagation(); 
     e.preventDefault();
@@ -36,8 +38,24 @@ const onDelete= async(e)=>{
     }
 }
 
-const handleCardClick = () => {
-    window.location.href = `/dashboard/${resumeInfo.template}/${item._id}`;
+const handleCardClick = async() => {
+    await fetch('http://localhost:8000/api/getTemplate',{
+      mode:"cors",
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body:JSON.stringify({
+          userId:item.createdBy,
+          ResumeID:item._id
+        })
+    }).then(res=>res.json()).then(data=>{
+      if(data.success && data.Template){
+        console.log(data.Template.Template)
+        navigate(`/dashboard/${data.Template.Template}/${item._id}`);
+      }
+    })
+   
 }
 
 const formatDate = (dateString) => {

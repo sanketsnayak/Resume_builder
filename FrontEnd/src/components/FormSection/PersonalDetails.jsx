@@ -233,27 +233,27 @@ function PersonalDetails({enableNext}) {
         <div className='grid grid-cols-2 my-3 gap-3'>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>First Name</label>
-                <Input name='firstName' value={personal.firstName }   onChange={handleEvent}  required></Input>
+                <Input name='firstName' value={resumeInfo.firstName }   onChange={handleEvent}  required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Last Name</label>
-                <Input name='lastName' value={personal.lastName}  onChange={handleEvent} required></Input>
+                <Input name='lastName' value={resumeInfo.lastName}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1 col-span-2'>
                 <label className='text-xs'>Job Title</label>
-                <Input name='jobTitle' value={personal.jobTitle}  onChange={handleEvent} required></Input>
+                <Input name='jobTitle' value={resumeInfo.jobTitle}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1 col-span-2'>
                 <label className='text-xs'>Address</label>
-                <Input name='address' value={personal.address} onChange={handleEvent} required></Input>
+                <Input name='address' value={resumeInfo.address} onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Phone</label>
-                <Input name='phone' value={personal.phone}  onChange={handleEvent} required></Input>
+                <Input name='phone' value={resumeInfo.phone}  onChange={handleEvent} required></Input>
             </div>
             <div className='flex flex-col gap-1'>
                 <label className='text-xs'>Email</label>
-                <Input name='email' value={personal.email} onChange={handleEvent} required></Input>
+                <Input name='email' value={resumeInfo.email} onChange={handleEvent} required></Input>
             </div>
             <div className='flex justify-end col-span-2'>
                 <Button type='submit'  className="size-fit">{loading?(<div className="col-span-3 flex items-center justify-center">

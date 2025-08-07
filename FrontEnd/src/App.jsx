@@ -7,6 +7,7 @@ import Resume from "./pages/Resume"
 import Template1 from "./pages/Template1"
 import { useUser } from "@clerk/clerk-react"
 import Download from "./components/FormSection/Download"
+import Download1 from "./components/FormSection/Download1"
 import UploadLinkedIn from "./components/UploadLinkedIn"
 import TemplatesChoice from "./components/TemplatesChoice"
 import { useState } from "react"
@@ -38,7 +39,8 @@ function App() {
           <Route path="dashboard/templateChoice/:id" element={<TemplatesChoice/>}/>
         </Route>
         <Route path="/signin" element={<Signin/>}/>
-        <Route path="dashboard/resume/:id/download" element={<Download/>}/>
+        <Route path="dashboard/template2/:id/download" element={<Download/>}/>
+        <Route path="dashboard/template1/:id/download" element={<Download1/>}/>
         <Route path="/uploadLinkedIn" element={<UploadLinkedIn/>}/>
       </Routes>
     </BrowserRouter>

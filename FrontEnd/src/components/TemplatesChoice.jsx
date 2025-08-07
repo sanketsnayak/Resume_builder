@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
+import { ResumeInfoContext } from '@/context/ResumeInfoContext';
 
 function TemplatesChoice() {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
   const navigate=useNavigate();
   const {id}=useParams()
   const {user}=useUser()
@@ -27,12 +29,17 @@ function TemplatesChoice() {
 
   const handleTemplateSelect = (templateId) => {
     setSelectedTemplate(templateId);
+    
   };
 
   const handleContinue = async() => {
     if (selectedTemplate) {
       console.log(selectedTemplate)
-      //navigate(`/dashboard/template${selectedTemplate}/${id}`)
+      setResumeInfo((prev)=>({
+      ...prev,
+      template:selectedTemplate
+    }))
+      
       await fetch("http://localhost:8000/api/addTemplate",{
         method:'POST',
         mode:"cors",
@@ -74,14 +81,14 @@ function TemplatesChoice() {
             <div
               key={template.id}
               className={`relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border-2 ${
-                selectedTemplate === template.id 
+                selectedTemplate === `template${template.id}`
                   ? 'border-orange-500 shadow-orange-100' 
                   : 'border-gray-200 hover:border-gray-300'
               }`}
               onClick={() => handleTemplateSelect(`template${template.id}`)}
             >
               
-              {selectedTemplate === template.id && (
+              {selectedTemplate === `template${template.id}` && (
                 <div className="absolute top-4 right-4 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center z-10">
                   <Check className="w-4 h-4 text-white" />
                 </div>
@@ -90,7 +97,7 @@ function TemplatesChoice() {
               
               <div className="p-4">
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 mb-4 h-64 flex items-center justify-center">
-                  {template.id === 1 ? (
+                  {template.id === `template${template.id}` ? (
                    
                     <div className="w-full max-w-xs bg-white rounded-lg shadow-md  p-4 transform scale-75">
                       <img src="/template1.png" alt="" />

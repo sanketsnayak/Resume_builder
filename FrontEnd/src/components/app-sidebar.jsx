@@ -45,7 +45,7 @@ export function AppSidebar() {
   
   
   return (
-    <div className="w-64 h-screen bg-gradient-to-b from-white to-gray-50 border-r border-gray-200/50 shadow-lg flex flex-col ">
+    <div className="fixed left-0 top-0 w-64  h-screen bg-gradient-to-b from-white to-gray-50 border-r border-gray-200/50 shadow-lg flex flex-col ">
       {/* Header Section */}
       <div className="p-6 border-b border-gray-200/50 bg-white/80 backdrop-blur-sm">
         {/* User Profile */}

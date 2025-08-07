@@ -278,7 +278,7 @@ function LinkedInUploadPage() {
         summ({id:data.resumeId})
         setTitle("")
         setDialogOpen(false)
-        navigate(`/dashboard/resume/${data.resumeId}`)
+        navigate(`/dashboard/templateChoice/${data.resumeId}`)
         
       }
       })

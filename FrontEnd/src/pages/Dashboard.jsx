@@ -15,7 +15,7 @@ function Dashboard() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className='flex-1 min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50'>
+      <div className='flex-1 ml-64 min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50'>
         {/* Header Section */}
         <div className='relative overflow-hidden'>
           {/* Background Elements */}
