@@ -7,10 +7,12 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { Search, Plus, FileText, Sparkles, TrendingUp, Award, Users, Zap } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 function Dashboard() {
   const {user} = useUser()
   const [search, setSearch] = useState("")
+  const navigate=useNavigate();
 
   return (
     <SidebarProvider>
@@ -64,7 +66,7 @@ function Dashboard() {
                 </div>
                 <div className='flex gap-4 mb-8'>
               
-              <Button variant="outline" className="border-2 border-gray-200 hover:border-orange-300 px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-lg font-semibold bg-white/80 backdrop-blur-sm">
+              <Button onClick={()=>navigate('/templateDisplay')} variant="outline" className="border-2 border-gray-200 hover:border-orange-300 px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-lg font-semibold bg-white/80 backdrop-blur-sm">
                 <FileText className="w-5 h-5 mr-2" />
                 View Templates
               </Button>

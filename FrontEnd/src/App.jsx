@@ -10,6 +10,7 @@ import Download from "./components/FormSection/Download"
 import Download1 from "./components/FormSection/Download1"
 import UploadLinkedIn from "./components/UploadLinkedIn"
 import TemplatesChoice from "./components/TemplatesChoice"
+import TemplatesDisplay from "./pages/TemplatesDisplay"
 import { useState } from "react"
 import { ResumeInfoContext } from "./context/ResumeInfoContext"
 import ATSscore from "./pages/ATSscore"
@@ -37,6 +38,7 @@ function App() {
           <Route path="dashboard/template2/:id" element={<Resume/>}/>
           <Route path="dashboard/template1/:id" element={<Template1/>}/>
           <Route path="dashboard/templateChoice/:id" element={<TemplatesChoice/>}/>
+          <Route path="templateDisplay" element={<TemplatesDisplay/>}/>
         </Route>
         <Route path="/signin" element={<Signin/>}/>
         <Route path="dashboard/template2/:id/download" element={<Download/>}/>

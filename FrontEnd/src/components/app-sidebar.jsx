@@ -16,7 +16,7 @@ const menuItems = [
     title: "Resume Templates",
     icon: CreditCard,
     isActive: false,
-    url:"/uploadLinkedIn"
+    url:"/templateDisplay"
   },
   {
     title: "linkedIn Resume",
