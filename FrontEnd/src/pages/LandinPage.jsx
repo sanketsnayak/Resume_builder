@@ -70,6 +70,18 @@ const ResumeBuilderLanding = () => {
         "As someone who reviews resumes daily, I can confirm that resumes created with this tool stand out from the crowd.",
     },
   ]
+  const Templates=[
+    {
+      id:1,
+      name:"Professional Classic",
+      image:"/image.png"
+    },
+    {
+      id:2,
+      name:"Modern Creative",
+      image:"/template1.png"
+    }
+  ]
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -115,7 +127,7 @@ const ResumeBuilderLanding = () => {
                     </span>
                   </button>
                   <button className="group border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500 px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg transform">
-                    <span className="flex items-center justify-center gap-2">
+                    <span onClick={()=>navigate('/templateDisplay')} className="flex items-center justify-center gap-2">
                       View Templates
                       <FileText className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
                     </span>
@@ -288,63 +300,67 @@ const ResumeBuilderLanding = () => {
       </section>
 
       {/* Templates Showcase */}
-      <section className="py-16 ">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16" data-animate id="templates-header">
-            <div
-              className={`transition-all duration-1000 ${isVisible["templates-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-            >
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
-                Professional
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
-                  {" "}
-                  Resume Templates
-                </span>
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Choose from our collection of professionally designed templates
-              </p>
+<section className="py-16">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16" data-animate id="templates-header">
+      <div
+        className={`transition-all duration-1000 ${isVisible["templates-header"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      >
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
+          Professional
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+            {" "}
+            Resume Templates
+          </span>
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Choose from our collection of professionally designed templates
+        </p>
+      </div>
+    </div>
+
+    {/* Fixed: Center the grid container and properly size the images */}
+    <div className="flex justify-center ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl" data-animate id="templates-grid">
+        {Templates.map((template) => (
+          <div
+            key={template.id}
+            className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isVisible["templates-grid"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            style={{ transitionDelay: `${template.id * 100}ms` }}
+          >
+            <img
+              src={template.image}
+              alt={`Resume Template ${template.name}`}
+              className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+              <div className="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 w-full hover:scale-105 transform shadow-lg">
+                  {template.name}
+                </button>
+              </div>
+            </div>
+            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <Star className="w-5 h-5 text-orange-500" />
             </div>
           </div>
+        ))}
+      </div>
+    </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 blur-md" data-animate id="templates-grid ">
-            {[1, 2, 3, 4, 5, 6].map((template) => (
-              <div
-                key={template}
-                className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isVisible["templates-grid"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${template * 100}ms` }}
-              >
-                <img
-                  src="resume1.avif"
-                  alt={`Resume Template ${template}`}
-                  className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
-                  <div className="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-white text-xl font-bold mb-3">Template {template}</h3>
-                    <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 w-full hover:scale-105 transform shadow-lg">
-                      Use This Template
-                    </button>
-                  </div>
-                </div>
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <Star className="w-5 h-5 text-orange-500" />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <button className="group border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500 px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg transform">
-              <span className="flex items-center justify-center gap-2">
-                View All Templates
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </button>
-          </div>
-        </div>
-      </section>
-
+    <div className="text-center mt-12">
+      <button 
+        onClick={() => navigate('/templateDisplay')}
+        className="group border-2 border-gray-300 hover:border-orange-500 hover:text-orange-500 px-8 py-4 rounded-lg font-medium text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg transform"
+      >
+        <span className="flex items-center justify-center gap-2">
+          View All Templates
+          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
       {/* Testimonials */}
       <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-4">
